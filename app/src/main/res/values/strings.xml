@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">transporte_pay</string>
+    <string name="app_client">Elizabeth Joy Transport</string>
+    <string name="email">Email Address</string>
+    <string name="pass">Password</string>
+    <string name="login">Log In</string>
+    <string name="register">Click Here to Sign Up</string>
+    <string name="or">or</string>
+</resources>
