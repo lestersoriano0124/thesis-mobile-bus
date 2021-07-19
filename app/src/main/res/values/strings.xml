@@ -3,7 +3,12 @@
     <string name="app_client">Elizabeth Joy Transport</string>
     <string name="email">Email Address</string>
     <string name="pass">Password</string>
+    <string name="confirm_pass">Confirm Password</string>
     <string name="login">Log In</string>
+    <string name="register1">Sign In</string>
     <string name="register">Click Here to Sign Up</string>
+    <string name="login_link">Click Here to Sign In</string>
     <string name="or">or</string>
+    <string name="name">Full Name</string>
+
 </resources>
