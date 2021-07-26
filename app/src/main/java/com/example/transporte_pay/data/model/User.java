@@ -1,7 +1,5 @@
 package com.example.transporte_pay.data.model;
 
-import com.google.gson.annotations.SerializedName;
-
 public class User {
     private int id;
 

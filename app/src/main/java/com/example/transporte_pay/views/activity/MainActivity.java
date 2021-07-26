@@ -1,25 +1,28 @@
 package com.example.transporte_pay.views.activity;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.transporte_pay.PassengerDashboardFragment;
 import com.example.transporte_pay.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     TextView email;
     ImageView profilePic;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
         email = findViewById(R.id.email);
         profilePic = findViewById(R.id.prof_pic);
-        signOutBTN = findViewById(R.id.logout_btn);
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        signOutBTN.setOnClickListener(v -> signOut());
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null){
@@ -53,7 +56,38 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "email"+personEmail, Toast.LENGTH_LONG).show();
         }
 
+        showPassengerDash();
+
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_logout,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logoutMenu:
+                signOut();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void showPassengerDash() {
+        PassengerDashboardFragment passengerDashboardFragment = new PassengerDashboardFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction();
+        Bundle data = new Bundle();
+        data.putString("message", "Hey Buddy");
+
+        passengerDashboardFragment.setArguments(data);
+        fragmentTransaction.replace(R.id.dashboard, passengerDashboardFragment).commit();
+    }
+
     private void signOut() {
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(this, task -> {
