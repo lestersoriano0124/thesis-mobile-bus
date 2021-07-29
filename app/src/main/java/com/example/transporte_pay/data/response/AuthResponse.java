@@ -1,6 +1,6 @@
 package com.example.transporte_pay.data.response;
 
-public class LoginResponse {
+public class AuthResponse {
     private int id;
     private int role_id;
     private String name;

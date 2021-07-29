@@ -23,7 +23,7 @@ import com.example.transporte_pay.data.api.UserClient;
 import com.example.transporte_pay.data.model.User;
 
 import com.example.transporte_pay.data.request.LoginRequest;
-import com.example.transporte_pay.data.response.LoginResponse;
+import com.example.transporte_pay.data.response.AuthResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -35,9 +35,6 @@ import com.google.android.gms.tasks.Task;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Call;
@@ -101,18 +98,18 @@ public class LoginActivity extends AppCompatActivity {
         loginRequest.setEmail(email.getText().toString());
         loginRequest.setPassword(password.getText().toString());
 
-        Call<LoginResponse> loginResponseCall = ApiClient.getUserClient().userLogin(loginRequest);
-        loginResponseCall.enqueue(new Callback<LoginResponse>() {
+        Call<AuthResponse> loginResponseCall = ApiClient.getUserClient().userLogin(loginRequest);
+        loginResponseCall.enqueue(new Callback<AuthResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                 if (response.isSuccessful()){
                     Toast.makeText(LoginActivity.this,"LOGIN SUCCESSFULLY", Toast.LENGTH_LONG).show();
-                    LoginResponse loginResponse = response.body();
+                    AuthResponse authResponse = response.body();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
 
-                            startActivity(new Intent(LoginActivity.this,MainActivity.class).putExtra("data", loginResponse.getEmail()));
+                            startActivity(new Intent(LoginActivity.this,MainActivity.class).putExtra("data", authResponse.getEmail()));
                         }
                     }, 700);
                 } else {
@@ -121,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(Call<AuthResponse> call, Throwable t) {
                 Log.w("error", "signInResult:failed code=" +t.getMessage());
             }
         });
