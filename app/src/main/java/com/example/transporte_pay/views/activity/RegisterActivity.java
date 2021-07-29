@@ -19,12 +19,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         loginLink = findViewById(R.id.login_link);
 
-        loginLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
+        loginLink.setOnClickListener(v -> {
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+
+
         });
     }
 }

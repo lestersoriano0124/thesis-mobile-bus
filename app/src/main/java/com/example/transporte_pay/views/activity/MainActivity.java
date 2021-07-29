@@ -8,9 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,24 +18,38 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.transporte_pay.PassengerDashboardFragment;
 import com.example.transporte_pay.R;
+import com.example.transporte_pay.data.api.UserClient;
+import com.example.transporte_pay.data.model.User;
+import com.example.transporte_pay.utils.Constants;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
+import org.jetbrains.annotations.NotNull;
+
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity {
-    Button signOutBTN;
     GoogleSignInClient mGoogleSignInClient;
     TextView email;
     ImageView profilePic;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
 
         email = findViewById(R.id.email);
         profilePic = findViewById(R.id.prof_pic);
@@ -53,12 +67,14 @@ public class MainActivity extends AppCompatActivity {
             Uri personPhoto = account.getPhotoUrl();
             email.setText(personEmail);
             Glide.with(this).load(String.valueOf(personPhoto)).into(profilePic);
-            Toast.makeText(MainActivity.this, "email"+personEmail, Toast.LENGTH_LONG).show();
         }
 
         showPassengerDash();
 
     }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,13 +84,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logoutMenu:
-                signOut();
-                return true;
-            default:
-                return super.onContextItemSelected(item);
+        if (item.getItemId() == R.id.logoutMenu) {
+            signOut();
+            return true;
         }
+        return super.onContextItemSelected(item);
     }
 
     private void showPassengerDash() {

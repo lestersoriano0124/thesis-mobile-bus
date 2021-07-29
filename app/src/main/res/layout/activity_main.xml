@@ -31,8 +31,8 @@
 
     <TextView
         android:id="@+id/email"
-        android:layout_width="228dp"
-        android:layout_height="36dp"
+        android:layout_width="224dp"
+        android:layout_height="81dp"
         android:layout_marginStart="108dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
@@ -40,7 +40,7 @@
         android:elevation="7dp"
         android:textAlignment="viewEnd"
         android:textColor="@color/white"
-        android:textSize="10sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/topview"
         app:layout_constraintEnd_toStartOf="@+id/prof_pic"
