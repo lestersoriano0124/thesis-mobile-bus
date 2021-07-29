@@ -1,6 +1,7 @@
 package com.example.transporte_pay.data.api;
 
 import com.example.transporte_pay.data.model.User;
+import com.example.transporte_pay.data.request.GoogleSignInRequest;
 import com.example.transporte_pay.data.request.LoginRequest;
 import com.example.transporte_pay.data.request.RegRequest;
 import com.example.transporte_pay.data.response.AuthResponse;
@@ -13,9 +14,9 @@ import retrofit2.http.POST;
 
 public interface UserClient {
 
-    @FormUrlEncoded
-    @POST("/google/")
-    Call<User> createGoggleAccount(@Body User user);
+
+    @POST(Constants.G_LOGIN)
+    Call<AuthResponse> createGoggleAccount(@Body GoogleSignInRequest googleSignInRequest);
 
     @POST(Constants.LOGIN)
     Call<AuthResponse> userLogin(@Body LoginRequest loginRequest);

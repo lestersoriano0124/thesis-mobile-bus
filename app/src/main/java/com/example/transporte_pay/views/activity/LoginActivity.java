@@ -22,8 +22,10 @@ import com.example.transporte_pay.data.api.ApiClient;
 import com.example.transporte_pay.data.api.UserClient;
 import com.example.transporte_pay.data.model.User;
 
+import com.example.transporte_pay.data.request.GoogleSignInRequest;
 import com.example.transporte_pay.data.request.LoginRequest;
 import com.example.transporte_pay.data.response.AuthResponse;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -50,8 +52,8 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     ActivityResultLauncher<Intent> activityResultLauncher;
     EditText email,password;
-    User user;
-    String personEmail,personName, personId ;
+    String personEmail,personName;
+    String personId ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +118,6 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,"LOGIN FAILED", Toast.LENGTH_LONG).show();
                 }
             }
-
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable t) {
                 Log.w("error", "signInResult:failed code=" +t.getMessage());
@@ -163,13 +164,45 @@ public class LoginActivity extends AppCompatActivity {
                 personEmail = account.getEmail();
                 personName = account.getDisplayName();
                 personId = account.getId();
-                user = new User(personName,personEmail,personId);
-                //sendNetworkRequest(user);
-                goToDash();
+                goToGoogleSignIn();
+                //goToDash();
             }
         } catch (ApiException e) {
             Log.w("Error", "signInResult:failed code=" + e.getStatusCode());
         }
+    }
+
+    private void goToGoogleSignIn() {
+        GoogleSignInRequest googleSignInRequest = new GoogleSignInRequest();
+        googleSignInRequest.setEmail(personEmail);
+        googleSignInRequest.setName(personName);
+        googleSignInRequest.setId(personId);
+
+        Call<AuthResponse> gooResponseCall = ApiClient.getUserClient().createGoggleAccount(googleSignInRequest);
+        gooResponseCall.enqueue(new Callback<AuthResponse>() {
+            @Override
+            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                if (response.isSuccessful()){
+                    AuthResponse authResponse = response.body();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class).putExtra("data", authResponse.getToken()));
+                        }
+                    }, 700);
+
+                }else {
+                    Toast.makeText(LoginActivity.this,"GOOGLE LOGIN FAILED", Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<AuthResponse> call, Throwable t) {
+                Log.w("error", "signInResult:failed code=" +t.getMessage());
+            }
+        });
+
+
+
     }
 
     private void goToDash() {
@@ -178,43 +211,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void sendNetworkRequest(User user) {
-        //Retrofit Instance
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
-        httpClient.addInterceptor(chain -> {
-            Request request = chain.request()
-                    .newBuilder()
-                    .addHeader("Authorization", "application/json")
-                    .build();
-            return chain.proceed(request);
-        });
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.100.3:80/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient.build())
-                .build();
-
-        UserClient userClient = retrofit.create(UserClient.class);
-
-        Call<User> call = userClient.createGoggleAccount(user);
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(@NotNull Call<User> call, @NotNull Response<User> response) {
-                Toast.makeText(LoginActivity.this,
-                        "YEY" + response.code(),
-                        Toast.LENGTH_LONG).show();
-                Toast.makeText(LoginActivity.this, "SIGN IN SUCCESSFULLY", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-            @Override
-            public void onFailure(@NotNull Call<User> call, @NotNull Throwable t) {
-                Log.w("error", "signInResult:failed code=" +t.getMessage());
-            }
-        });
-    }
 
 
 }

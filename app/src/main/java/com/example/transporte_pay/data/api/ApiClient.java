@@ -33,10 +33,7 @@ public class ApiClient {
     }
 
     public static UserClient getUserClient(){
-        UserClient userClient = getRetrofit().create(UserClient.class);
-        return userClient;
+        return getRetrofit().create(UserClient.class);
     }
-
-
 }
 
