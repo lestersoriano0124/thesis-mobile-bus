@@ -12,7 +12,16 @@
     <string name="or">or</string>
     <string name="name">Full Name</string>
     <string name="server_client_id">YOUR_SERVER_CLIENT_ID</string>
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="locations">
+        <item>Taguig</item>
+        <item>Alabang</item>
+        <item>Paranaque</item>
+        <item>Makati</item>
+        <item>Pasay</item>
+        <item>Mandaluyong</item>
+    </string-array>
 
 </resources>

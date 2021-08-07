@@ -4,11 +4,11 @@ package com.example.transporte_pay.views.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -18,22 +18,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.transporte_pay.PassengerDashboardFragment;
 import com.example.transporte_pay.R;
-import com.example.transporte_pay.data.api.UserClient;
-import com.example.transporte_pay.data.model.User;
-import com.example.transporte_pay.utils.Constants;
+import com.example.transporte_pay.utils.SessionManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-
-import org.jetbrains.annotations.NotNull;
-
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
 
         email = findViewById(R.id.email);
@@ -68,12 +55,8 @@ public class MainActivity extends AppCompatActivity {
             email.setText(personEmail);
             Glide.with(this).load(String.valueOf(personPhoto)).into(profilePic);
         }
-
         showPassengerDash();
-
     }
-
-
 
 
     @Override
@@ -103,11 +86,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signOut() {
+        SessionManager sessionManager = new SessionManager(getApplicationContext());
+        sessionManager.setLogin(false);
         mGoogleSignInClient.signOut()
-                .addOnCompleteListener(this, task -> {
-                    Toast.makeText(MainActivity.this, "USER SIGNED OUT SUCCESSFULLY", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
+        .addOnCompleteListener(this, task -> {
+            Toast.makeText(MainActivity.this, "USER SIGNED OUT SUCCESSFULLY", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        dialogBox();
+    }
+
+    public void dialogBox() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Do you want to Log Out?");
+        alertDialogBuilder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        signOut();
+                    }
                 });
+
+        alertDialogBuilder.setNegativeButton("cancel",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

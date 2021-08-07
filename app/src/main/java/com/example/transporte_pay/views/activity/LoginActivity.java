@@ -3,12 +3,15 @@ package com.example.transporte_pay.views.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,13 +22,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.data.api.ApiClient;
-import com.example.transporte_pay.data.api.UserClient;
-import com.example.transporte_pay.data.model.User;
 
 import com.example.transporte_pay.data.request.GoogleSignInRequest;
 import com.example.transporte_pay.data.request.LoginRequest;
-import com.example.transporte_pay.data.response.AuthResponse;
-import com.google.android.gms.auth.api.Auth;
+import com.example.transporte_pay.data.model.User;
+import com.example.transporte_pay.utils.SessionManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -35,15 +36,11 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.HashMap;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
     TextView reg_link;
@@ -54,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText email,password;
     String personEmail,personName;
     String personId ;
+    ProgressBar loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +63,12 @@ public class LoginActivity extends AppCompatActivity {
         reg_link = findViewById(R.id.register_link);
         signInButton = findViewById(R.id.signInButton);
         loginButton = findViewById(R.id.loginButton);
+        loading = findViewById(R.id.progressBar);
 
-        Toast.makeText(this, "ON CREATE", Toast.LENGTH_LONG).show();
+
+        SessionManager sessionManager = new SessionManager(getApplicationContext());
+        sessionManager.isLoggedIn();
+
 
         reg_link.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -100,26 +102,34 @@ public class LoginActivity extends AppCompatActivity {
         loginRequest.setEmail(email.getText().toString());
         loginRequest.setPassword(password.getText().toString());
 
-        Call<AuthResponse> loginResponseCall = ApiClient.getUserClient().userLogin(loginRequest);
-        loginResponseCall.enqueue(new Callback<AuthResponse>() {
+        loading.setVisibility(View.VISIBLE);
+        loginButton.setVisibility(View.GONE);
+
+        Call<User> loginResponseCall = ApiClient.getUserClient().userLogin(loginRequest);
+        loginResponseCall.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()){
                     Toast.makeText(LoginActivity.this,"LOGIN SUCCESSFULLY", Toast.LENGTH_LONG).show();
-                    AuthResponse authResponse = response.body();
+                    User user = response.body();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            SessionManager sessionManager = new SessionManager(getApplicationContext());
+                            sessionManager.fetchAuthToken(user.getToken());
+                            sessionManager.createSession(user.getName(), user.getEmail(), user.getRole_id(), user.getGoogle_id());
 
-                            startActivity(new Intent(LoginActivity.this,MainActivity.class).putExtra("data", authResponse.getEmail()));
+                            startActivity(new Intent(LoginActivity.this,MainActivity.class).putExtra("id", user.getId()));
+
+                            finish();
                         }
-                    }, 700);
+                    }, 300);
                 } else {
                     Toast.makeText(LoginActivity.this,"LOGIN FAILED", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
-            public void onFailure(Call<AuthResponse> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Log.w("error", "signInResult:failed code=" +t.getMessage());
             }
         });
@@ -178,16 +188,17 @@ public class LoginActivity extends AppCompatActivity {
         googleSignInRequest.setName(personName);
         googleSignInRequest.setId(personId);
 
-        Call<AuthResponse> gooResponseCall = ApiClient.getUserClient().createGoggleAccount(googleSignInRequest);
-        gooResponseCall.enqueue(new Callback<AuthResponse>() {
+        Call<User> gooResponseCall = ApiClient.getUserClient().createGoggleAccount(googleSignInRequest);
+        gooResponseCall.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()){
-                    AuthResponse authResponse = response.body();
+                    User user = response.body();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class).putExtra("data", authResponse.getToken()));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class)
+                                    .putExtra("token", user.getToken()));
                         }
                     }, 700);
 
@@ -196,22 +207,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<AuthResponse> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Log.w("error", "signInResult:failed code=" +t.getMessage());
             }
         });
-
-
-
     }
-
-    private void goToDash() {
-        Toast.makeText(LoginActivity.this, "SIGN IN SUCCESSFULLY", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-    }
-
-
-
-
 }

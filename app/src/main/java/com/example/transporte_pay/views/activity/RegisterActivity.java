@@ -10,13 +10,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.data.api.ApiClient;
 import com.example.transporte_pay.data.request.RegRequest;
-import com.example.transporte_pay.data.response.AuthResponse;
+import com.example.transporte_pay.data.model.User;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextView loginLink;
     Button registerButton;
     EditText name, email, password, c_pass;
+    ProgressBar loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +36,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         loginLink = findViewById(R.id.login_link);
         registerButton = findViewById(R.id.reg_btn);
-        name = findViewById(R.id.reg_name);
-        email = findViewById(R.id.reg_email);
+        name = findViewById(R.id.prof_name);
+        email = findViewById(R.id.prof_email);
         password = findViewById(R.id.reg_password);
         c_pass = findViewById(R.id.reg_confirm_password);
+        loading = findViewById(R.id.progressBar_Reg);
 
         loginLink.setOnClickListener(v -> {
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -67,26 +70,29 @@ public class RegisterActivity extends AppCompatActivity {
         regRequest.setPassword(password.getText().toString());
         regRequest.setPassword_confirmation(c_pass.getText().toString());
 
-        Call<AuthResponse> registerResponseCall = ApiClient.getUserClient().userRegister(regRequest);
-        registerResponseCall.enqueue(new Callback<AuthResponse>() {
+        loading.setVisibility(View.VISIBLE);
+        registerButton.setVisibility(View.GONE);
+
+        Call<User> registerResponseCall = ApiClient.getUserClient().userRegister(regRequest);
+        registerResponseCall.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()){
                     Toast.makeText(RegisterActivity.this,"Account Registered", Toast.LENGTH_LONG).show();
-                    AuthResponse authResponse = response.body();
+                    User user = response.body();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            startActivity(new Intent(RegisterActivity.this,MainActivity.class).putExtra("data", authResponse.getToken()));
+                            startActivity(new Intent(RegisterActivity.this,MainActivity.class).putExtra("data", user.getToken()));
                         }
-                    }, 700);
+                    }, 300);
                 }
                 else {
                     Toast.makeText(RegisterActivity.this,"LOGIN FAILED", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
-            public void onFailure(Call<AuthResponse> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Log.w("error", "signInResult:failed code=" +t.getMessage());
             }
         });
