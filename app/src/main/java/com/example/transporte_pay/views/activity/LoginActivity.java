@@ -115,11 +115,8 @@ public class LoginActivity extends AppCompatActivity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            SessionManager sessionManager = new SessionManager(getApplicationContext());
-                            sessionManager.fetchAuthToken(user.getToken());
-                            sessionManager.createSession(user.getName(), user.getEmail(), user.getRole_id(), user.getGoogle_id());
 
-                            startActivity(new Intent(LoginActivity.this,MainActivity.class).putExtra("id", user.getId()));
+                            startActivity(new Intent(LoginActivity.this,MainActivity.class).putExtra("token", user.getToken()));
 
                             finish();
                         }
@@ -209,6 +206,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.w("error", "signInResult:failed code=" +t.getMessage());
+
             }
         });
     }

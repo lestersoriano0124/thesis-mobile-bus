@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.transporte_pay.PassengerDashboardFragment;
+import com.example.transporte_pay.views.fragment.PassengerDashboardFragment;
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.utils.SessionManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         profilePic = findViewById(R.id.prof_pic);
 
+        String token1 = SessionManager.PREF_USER_TOKEN;
+
+        Toast.makeText(this, "TOKEN" + token1 , Toast.LENGTH_LONG).show();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()

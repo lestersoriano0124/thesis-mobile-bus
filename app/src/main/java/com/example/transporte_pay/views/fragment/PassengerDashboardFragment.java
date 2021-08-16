@@ -1,4 +1,4 @@
-package com.example.transporte_pay;
+package com.example.transporte_pay.views.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.transporte_pay.R;
 import com.example.transporte_pay.views.activity.BookingActivity;
 import com.example.transporte_pay.views.activity.ProfileActivity;
 import com.example.transporte_pay.views.activity.TravelLogsActivity;

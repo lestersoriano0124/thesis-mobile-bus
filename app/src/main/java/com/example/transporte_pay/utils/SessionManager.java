@@ -73,14 +73,14 @@ public class SessionManager {
 
 
 
-    public static void saveAuthToken(String token) {
+    public static void saveAuthToken(int token) {
         SharedPreferences.Editor editor = pref.edit();
-        editor.putString(PREF_USER_TOKEN, token);
+        editor.putString(PREF_USER_TOKEN, String.valueOf(token));
         editor.apply();
     }
 
 
-    public String fetchAuthToken(int token){
+    public String fetchAuthToken(){
         return pref.getString(PREF_USER_TOKEN, null);
     }
 
