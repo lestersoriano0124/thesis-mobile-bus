@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.transporte_pay.R;
+import com.example.transporte_pay.utils.SessionManager;
 import com.example.transporte_pay.views.activity.BookingActivity;
 import com.example.transporte_pay.views.activity.ProfileActivity;
 import com.example.transporte_pay.views.activity.TravelLogsActivity;
@@ -21,10 +22,16 @@ public class PassengerDashboardFragment extends Fragment implements View.OnClick
     private String message;
     public TextView text;
     CardView card1, card2, card3 , card4;
+    SessionManager sessionManager;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        sessionManager = new SessionManager(getContext());
+        sessionManager.checkLogin();
+
         View view = inflater.inflate(R.layout.fragment_passenger_dashboard, container, false);
        // CardView cardView = (CardView) inflater.inflate(R.layout.fragment_passenger_dashboard, container, false);
 

@@ -7,6 +7,7 @@ public class BusRoutes {
     private String destination;
     private int fare;
 
+
     public Integer getId() {
         return id;
     }
