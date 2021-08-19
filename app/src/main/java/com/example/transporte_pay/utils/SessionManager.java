@@ -1,8 +1,12 @@
 package com.example.transporte_pay.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+
+import com.example.transporte_pay.views.activity.LoginActivity;
+import com.example.transporte_pay.views.activity.MainActivity;
 
 import java.util.HashMap;
 
@@ -30,58 +34,93 @@ public class SessionManager {
     public static final String ROLE = "ROLE";
     public static final String PASS = "PASS";
     public static final String G_ID = "G_ID";
-
+    public static final String ID = "ID";
 
     public SessionManager(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
+        editor.apply();
     }
 
-    public void createSession(String name, String email, Integer role, Integer googleID){
+    public void createSession(String name, String email, int role, String gID, int id){
         SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(IS_LOGIN, true);
         editor.putString(NAME, name);
         editor.putString(EMAIL, email);
-        editor.putString(ROLE, String.valueOf(role));
-        editor.putString(G_ID, String.valueOf(googleID));
+        editor.putInt(ROLE, role);
+        editor.putString(G_ID, String.valueOf(gID));
+        editor.putInt(ID,id);
+
 
         editor.apply();
     }
 
-//    Create login Session
-    public void setLogin(boolean isLoggedIn) {
-        editor.putBoolean(IS_LOGIN, isLoggedIn);
-        // commit changes
-        editor.commit();
-        Log.d(TAG, "User login session modified!");
+//     * Check login method wil check user login status
+//     * If false it will redirect user to login page
+//     * Else won't do anything
+//            * */
+    public void checkLogin(){
+        // Check login status
+        if(!this.isLoggedIn()){
+            // user is not logged in redirect him to Login Activity
+            Intent i = new Intent(_context, LoginActivity.class);
+            // Closing all the Activities
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            // Add new Flag to start new Activity
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            // Staring Login Activity
+            _context.startActivity(i);
+        }
     }
 
     public boolean isLoggedIn() {
         return pref.getBoolean(IS_LOGIN, false);
     }
 
+    public void logoutUser(){
+        // Clearing all data from Shared Preferences
+        editor.clear();
+        editor.commit();
+
+        // After logout redirect user to Loing Activity
+        Intent i = new Intent(_context, LoginActivity.class);
+        // Closing all the Activities
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        // Add new Flag to start new Activity
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        // Staring Login Activity
+        _context.startActivity(i);
+    }
+
     public HashMap<String, String> getUSerDetails(){
         HashMap<String,String> user = new HashMap<>();
         user.put(NAME, pref.getString(NAME, null));
         user.put(EMAIL, pref.getString(EMAIL, null));
-        user.put(ROLE, pref.getString(ROLE, null));
         user.put(PASS, pref.getString(PASS, null));
         user.put(G_ID, pref.getString(G_ID, null));
+        user.put(PREF_USER_TOKEN, pref.getString(PREF_USER_TOKEN, null));
 
         return user;
     }
 
 
 
-    public static void saveAuthToken(int token) {
+    public static void saveAuthToken(String token) {
         SharedPreferences.Editor editor = pref.edit();
-        editor.putString(PREF_USER_TOKEN, String.valueOf(token));
+        editor.putString(PREF_USER_TOKEN, token);
         editor.apply();
     }
 
 
     public String fetchAuthToken(){
-        return pref.getString(PREF_USER_TOKEN, null);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(PREF_USER_TOKEN, pref.getString(PREF_USER_TOKEN,null));
+        return PREF_USER_TOKEN;
     }
 
 

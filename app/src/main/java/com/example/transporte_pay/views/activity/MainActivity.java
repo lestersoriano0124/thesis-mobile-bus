@@ -4,11 +4,13 @@ package com.example.transporte_pay.views.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.transporte_pay.data.model.User;
 import com.example.transporte_pay.views.fragment.PassengerDashboardFragment;
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.utils.SessionManager;
@@ -24,11 +27,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
+import java.util.HashMap;
+
 
 public class MainActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     TextView email;
     ImageView profilePic;
+    SessionManager sessionManager;
+    String test;
+    User user;
+
 
 
 
@@ -41,15 +50,35 @@ public class MainActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         profilePic = findViewById(R.id.prof_pic);
 
-        String token1 = SessionManager.PREF_USER_TOKEN;
+//        Intent intent = getIntent();
+//        if(intent.getExtras() != null){
+//            user = (User) intent.getSerializableExtra("token");
+//            Log.e("TOKEN", "************" + user);
+//        }
 
-        Toast.makeText(this, "TOKEN" + token1 , Toast.LENGTH_LONG).show();
+        // Session class instance
+        User user = new User();
+        String token = user.getToken();
+
+        sessionManager = new SessionManager(getApplicationContext());
+
+        sessionManager.checkLogin();
+
+        HashMap<String, String> userData = sessionManager.getUSerDetails();
+        String getToken = userData.get(SessionManager.PREF_USER_TOKEN);
+        String getEmail = userData.get(SessionManager.EMAIL);
+        email.setText(getEmail);
+
+        Log.e("TOKEN", "************ " + getToken);
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+//        test = sessionManager.fetchAuthToken();
+//        email.setText(test);
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null){
@@ -90,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void signOut() {
         SessionManager sessionManager = new SessionManager(getApplicationContext());
-        sessionManager.setLogin(false);
+//        sessionManager.isLoggedIn(false);
+        sessionManager.logoutUser();
         mGoogleSignInClient.signOut()
         .addOnCompleteListener(this, task -> {
             Toast.makeText(MainActivity.this, "USER SIGNED OUT SUCCESSFULLY", Toast.LENGTH_LONG).show();

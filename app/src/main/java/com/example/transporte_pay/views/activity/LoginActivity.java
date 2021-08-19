@@ -3,7 +3,6 @@ package com.example.transporte_pay.views.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -26,6 +25,8 @@ import com.example.transporte_pay.data.api.ApiClient;
 import com.example.transporte_pay.data.request.GoogleSignInRequest;
 import com.example.transporte_pay.data.request.LoginRequest;
 import com.example.transporte_pay.data.model.User;
+import com.example.transporte_pay.utils.APIError;
+import com.example.transporte_pay.utils.AlertDialogManager;
 import com.example.transporte_pay.utils.SessionManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -35,8 +36,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-
-import java.util.HashMap;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,9 +49,13 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     ActivityResultLauncher<Intent> activityResultLauncher;
     EditText email,password;
-    String personEmail,personName;
-    String personId ;
+    String personEmail,personName, personId;
+    String getName, getEmail, getGooId;
+    Integer getRole, id;
     ProgressBar loading;
+    SessionManager sessionManager;
+    AlertDialogManager alert;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +69,11 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         loading = findViewById(R.id.progressBar);
 
+        // Alert Dialog Manager
+        alert = new AlertDialogManager();
 
-        SessionManager sessionManager = new SessionManager(getApplicationContext());
-        sessionManager.isLoggedIn();
-
+        sessionManager = new SessionManager(this);
+        Toast.makeText(getApplicationContext(), "User Login Status: " + sessionManager.isLoggedIn(), Toast.LENGTH_LONG).show();
 
         reg_link.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -80,9 +85,14 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(v -> {
             if (TextUtils.isEmpty(email.getText().toString()) || TextUtils.isEmpty(password.getText().toString())){
-                Toast.makeText(LoginActivity.this, "Email/Password is Required", Toast.LENGTH_LONG).show();
+                // user didn't entered username or password
+                // Show alert asking him to enter the details
+                alert.showAlertDialog(LoginActivity.this,
+                        "Login failed..",
+                        "Please enter username and password",
+                        false);
             }else {
-                gotoLogin();
+                gotoLogin(createRequest());
             }
         });
 
@@ -92,16 +102,17 @@ public class LoginActivity extends AppCompatActivity {
 
         getActivityResultLauncher();
 
-
-
-//        userLogin(email.getText().toString(), password.getText().toString());
     }
 
-    private void gotoLogin() {
+    public LoginRequest createRequest(){
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setEmail(email.getText().toString());
         loginRequest.setPassword(password.getText().toString());
 
+        return loginRequest;
+    }
+
+    private void gotoLogin(LoginRequest loginRequest) {
         loading.setVisibility(View.VISIBLE);
         loginButton.setVisibility(View.GONE);
 
@@ -112,12 +123,25 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     Toast.makeText(LoginActivity.this,"LOGIN SUCCESSFULLY", Toast.LENGTH_LONG).show();
                     User user = response.body();
+                    String token = user.getToken();
+                    String lName = user.getName();
+                    Log.e("RESPONSE","********************" + token + lName);
+
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            getName = user.getName();
+                            getEmail = user.getEmail();
+                            getRole = user.getRole_id();
+                            getGooId = user.getGoogle_id();
+                            id = user.getId();
 
-                            startActivity(new Intent(LoginActivity.this,MainActivity.class).putExtra("token", user.getToken()));
+                            sessionManager.saveAuthToken(token);
+                            sessionManager.createSession(getName, getEmail,getRole,getGooId,id);
+                            Log.e("TOKEN","******************** " + getName);
 
+                            startActivity(new Intent(LoginActivity.this,MainActivity.class)
+                                    .putExtra("token", user.getToken()));
                             finish();
                         }
                     }, 300);
@@ -127,7 +151,17 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Log.w("error", "signInResult:failed code=" +t.getMessage());
+                Log.e("error", "signInResult:failed code=" +t.getMessage());
+//                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+                alert.showAlertDialog(LoginActivity.this,
+                        "ERROR",
+                        "Login Failed, Please try again",
+                        false);
+                loading.setVisibility(View.GONE);
+                loginButton.setVisibility(View.VISIBLE);
+                email.setText(null);
+                password.setText(null);
+
             }
         });
 
@@ -176,6 +210,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         } catch (ApiException e) {
             Log.w("Error", "signInResult:failed code=" + e.getStatusCode());
+            alert.showAlertDialog(LoginActivity.this,
+                    "ERROR",
+                    "Sign In Failed, Please try again",
+                    false);
         }
     }
 
@@ -190,22 +228,46 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()){
+//                    Log.e("CODE", "********************" + String.valueOf(response.code()));
                     User user = response.body();
+                    Log.e("RESPONSE","********************" + response.body().getGoogle_id());
+                    String token = user.getToken();
+                    sessionManager.saveAuthToken(token);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            getName = user.getName();
+                            getEmail = user.getEmail();
+                            getRole = user.getRole_id();
+                            getGooId = user.getGoogle_id();
+                            id = user.getId();
+
+                            sessionManager.saveAuthToken(token);
+                            sessionManager.createSession(getName, getEmail,getRole,getGooId,id);
+                            Log.e("RESPONSE",getEmail + getGooId + getName + getRole);
+
                             startActivity(new Intent(LoginActivity.this, MainActivity.class)
-                                    .putExtra("token", user.getToken()));
+                                    .putExtra("data", user));
                         }
                     }, 700);
 
                 }else {
-                    Toast.makeText(LoginActivity.this,"GOOGLE LOGIN FAILED", Toast.LENGTH_LONG).show();
+                    APIError message = new Gson().fromJson(response.errorBody().charStream(), APIError.class);
+                    //Toast.makeText(LoginActivity.this," " + message.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("ERROR", "-----------" +message.getMessage());
+                    alert.showAlertDialog(LoginActivity.this,
+                            "ERROR",
+                            "Login Failed, Please try again",
+                            false);
                 }
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.w("error", "signInResult:failed code=" +t.getMessage());
+                alert.showAlertDialog(LoginActivity.this,
+                        "ERROR",
+                        "Login Failed, Please try again",
+                        false);
 
             }
         });
