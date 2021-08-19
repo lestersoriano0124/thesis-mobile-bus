@@ -17,8 +17,7 @@ import retrofit2.http.POST;
 
 public interface UserClient {
 
-    User user = new User();
-    Integer token = user.getToken();
+
 
     @POST(Constants.G_LOGIN)
     Call<User> createGoggleAccount(@Body GoogleSignInRequest googleSignInRequest);
