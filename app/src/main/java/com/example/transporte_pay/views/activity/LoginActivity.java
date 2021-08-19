@@ -246,6 +246,11 @@ public class LoginActivity extends AppCompatActivity {
                             sessionManager.createSession(getName, getEmail,getRole,getGooId,id);
                             Log.e("RESPONSE",getEmail + getGooId + getName + getRole);
 
+                            alert.showAlertDialog(LoginActivity.this,
+                                    "SUCCESS",
+                                    "Login Successful",
+                                    true);
+
                             startActivity(new Intent(LoginActivity.this, MainActivity.class)
                                     .putExtra("data", user));
                         }
