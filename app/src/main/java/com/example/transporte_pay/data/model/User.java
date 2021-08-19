@@ -2,13 +2,15 @@ package com.example.transporte_pay.data.model;
 
 import android.content.SharedPreferences;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private int id;
     private int role_id;
     private String name;
     private String email;
-    private Integer google_id;
-    private int token;
+    private String google_id;
+    private String token;
 
     public int getId() {
         return id;
@@ -42,21 +44,21 @@ public class User {
         this.email = email;
     }
 
-    public Integer getGoogle_id() {
+    public String getGoogle_id() {
         return google_id;
     }
 
-    public void setGoogle_id(Integer google_id) {
+    public void setGoogle_id(String google_id) {
         this.google_id = google_id;
     }
 
-    public int getToken() {
+    public String getToken() {
         return token;
     }
 
 
 
-    public void setToken(int token) {
+    public void setToken(String token) {
         this.token = token;
     }
 }
