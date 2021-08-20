@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     ImageView profilePic;
     SessionManager sessionManager;
     String test;
-    User user;
-
 
 
 
@@ -56,10 +54,6 @@ public class MainActivity extends AppCompatActivity {
 //            Log.e("TOKEN", "************" + user);
 //        }
 
-        // Session class instance
-        User user = new User();
-        String token = user.getToken();
-
         sessionManager = new SessionManager(getApplicationContext());
 
         sessionManager.checkLogin();
@@ -68,17 +62,16 @@ public class MainActivity extends AppCompatActivity {
         String getToken = userData.get(SessionManager.PREF_USER_TOKEN);
         String getEmail = userData.get(SessionManager.EMAIL);
         email.setText(getEmail);
+        test = userData.get(SessionManager.NAME);
 
-        Log.e("TOKEN", "************ " + getToken);
-
+        Log.e("TOKEN MAIN ACTIVITY", "************ " + getToken);
+        //WELCOME MESSAGE
+        Toast.makeText(this, "WELCOME "+test, Toast.LENGTH_SHORT ).show();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-//        test = sessionManager.fetchAuthToken();
-//        email.setText(test);
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null){
