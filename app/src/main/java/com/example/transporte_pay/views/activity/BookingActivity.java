@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -99,13 +101,24 @@ public class BookingActivity extends AppCompatActivity{
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             busRoutes.setStarting_point(jsonObject.getString("starting_point"));
                             busRoutes.setDestination(jsonObject.getString("destination"));
+                            busRoutes.setFare(jsonObject.getInt("fare"));
+                            busRoutes.setId(jsonObject.getInt("id"));
+
                             getBusRoutes.add(busRoutes);
-                            Log.e("RESULT", "-----------" + busRoutes);
+                            Log.e("RESULT", "-----------" + getResponse);
+                            Log.e("Kineme", "-----------" + getBusRoutes);
+                            Log.e("fare", "-----------" + getBusRoutes.get(i).getStarting_point());
                         }
                         for (int i=0;i<getBusRoutes.size();i++) {
                             destinationList.add(getBusRoutes.get(i).getStarting_point().toString());
-                            StartingPointList.add(getBusRoutes.get(i).getDestination().toString());
-                            //String fare = getBusRoutes.get(i).getDestination().toString();
+//                            destinationList.add(getBusRoutes.get(i).getDestination().toString());
+//                            destinationList.add(getBusRoutes.get(i).getFare());
+//                            destinationList.add(getBusRoutes.get(i).getId().toString());
+
+//                            StartingPointList.add(getBusRoutes.get(i).getDestination().toString());
+                            String fare = getBusRoutes.get(i).getDestination().toString();
+                            Log.e("fare", "-----------" + getBusRoutes);
+
 
                         }
                             ArrayAdapter<String> spinRoutesAdapter = new ArrayAdapter<String>(BookingActivity.this,
@@ -114,11 +127,28 @@ public class BookingActivity extends AppCompatActivity{
                             spinRoutesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             destinationFrom.setAdapter(spinRoutesAdapter);
 
-                            ArrayAdapter<String> spinRoutesAdapter1 = new ArrayAdapter<String>(BookingActivity.this,
-                                android.R.layout.simple_spinner_item,
-                                    StartingPointList);
-                            spinRoutesAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            destinationTo.setAdapter(spinRoutesAdapter1);
+
+                            destinationFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    String mID = getBusRoutes.get(position).getId().toString();
+                                    String mDestination = getBusRoutes.get(position).getDestination().toString();
+
+                                    Log.e("mSelected", "-----------" + mID + mDestination);
+
+                                    ArrayAdapter<String> spinRoutesAdapter1 = new ArrayAdapter<String>(BookingActivity.this,
+                                            android.R.layout.simple_spinner_item,
+                                            StartingPointList);
+                                    spinRoutesAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    destinationTo.setAdapter(spinRoutesAdapter1);
+
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                    Log.i("Message", "Nothing is selected");
+                                }
+                            });
 
                     } catch (JSONException e) {
                         e.printStackTrace();

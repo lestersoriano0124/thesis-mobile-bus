@@ -167,7 +167,7 @@
         app:layout_constraintTop_toBottomOf="@+id/reg_confirm_password"></ProgressBar>
 
     <TextView
-        android:id="@+id/login_link"
+        android:id="@+id/changePass_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"

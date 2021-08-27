@@ -43,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        loginLink = findViewById(R.id.login_link);
+        loginLink = findViewById(R.id.changePass_link);
         registerButton = findViewById(R.id.reg_btn);
         name = findViewById(R.id.prof_name);
         email = findViewById(R.id.prof_email);
