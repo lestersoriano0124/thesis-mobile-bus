@@ -125,10 +125,10 @@
         app:layout_constraintBottom_toTopOf="@+id/changePass_link"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar_Reg" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBar_update" />
 
     <ProgressBar
-        android:id="@+id/progressBar_Reg"
+        android:id="@+id/progressBar_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"

@@ -5,6 +5,7 @@ import com.example.transporte_pay.data.request.GoogleSignInRequest;
 import com.example.transporte_pay.data.request.LoginRequest;
 import com.example.transporte_pay.data.request.RegRequest;
 import com.example.transporte_pay.data.model.User;
+import com.example.transporte_pay.data.request.UpdateUserRequest;
 import com.example.transporte_pay.utils.Constants;
 
 import java.util.List;
@@ -17,8 +18,6 @@ import retrofit2.http.POST;
 
 public interface UserClient {
 
-
-
     @POST(Constants.G_LOGIN)
     Call<User> createGoggleAccount(@Body GoogleSignInRequest googleSignInRequest);
 
@@ -27,4 +26,7 @@ public interface UserClient {
 
     @POST(Constants.REGISTER)
     Call<User> userRegister(@Body RegRequest regRequest);
+
+    @POST(Constants.UPDATE_DATA)
+    Call<User> updateData(@Body UpdateUserRequest updateUserRequest, @Header("Authorization") String auth);
 }

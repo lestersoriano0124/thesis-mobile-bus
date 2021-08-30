@@ -50,34 +50,11 @@ public class ApiClient {
         return getRetrofit().create(UserClient.class);
     }
 
-//    private static Retrofit getRetrofit1() {
-//
-//        User user = new User();
-//        String token = user.getToken();
-//
-//
-//        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
-//            @NotNull
-//            @Override
-//            public Response intercept(@NotNull Chain chain) throws IOException {
-//                Request newRequest = chain.request()
-//                        .newBuilder()
-//                        .addHeader("Authorization", "Bearer " + token)
-//                        .build();
-//                return chain.proceed(newRequest);
-//            }
-//        }).build();
-//
-//        Retrofit retrofit1 = new Retrofit.Builder()
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .baseUrl(Constants.BASE_URL)
-//                .client(client)
-//                .build();
-//        return retrofit1;
-//    }
-
     public static BusClient getBusClient(){
         return  getRetrofit().create(BusClient.class);
     }
+
+
+
 }
 

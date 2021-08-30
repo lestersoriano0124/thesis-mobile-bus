@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         email = findViewById(R.id.prof_email);
         password = findViewById(R.id.reg_password);
         c_pass = findViewById(R.id.reg_confirm_password);
-        loading = findViewById(R.id.progressBar_Reg);
+        loading = findViewById(R.id.progressBar_update);
 
         sessionManager = new SessionManager(this);
         alert = new AlertDialogManager();
@@ -105,6 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()){
+                    loading.setVisibility(View.GONE);
                     Toast.makeText(RegisterActivity.this,"Account Registered", Toast.LENGTH_LONG).show();
                     alert.showAlertDialog(RegisterActivity.this,
                             "SUCCESS",
@@ -142,7 +143,6 @@ public class RegisterActivity extends AppCompatActivity {
                 failedAlert();
                 Log.e("error", "signInResult:failed code=" +t.getMessage());
                 loading.setVisibility(View.GONE);
-                registerButton.setVisibility(View.VISIBLE);
             }
         });
     }

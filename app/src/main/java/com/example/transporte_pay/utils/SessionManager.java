@@ -3,14 +3,10 @@ package com.example.transporte_pay.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.example.transporte_pay.views.activity.LoginActivity;
-import com.example.transporte_pay.views.activity.MainActivity;
 
 import java.util.HashMap;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 public class SessionManager {
@@ -51,8 +47,14 @@ public class SessionManager {
         editor.putInt(ROLE, role);
         editor.putString(G_ID, String.valueOf(gID));
         editor.putInt(ID,id);
+        editor.apply();
+    }
 
-
+    public void updateData (String name, String email){
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(IS_LOGIN, true);
+        editor.putString(NAME, name);
+        editor.putString(EMAIL, email);
         editor.apply();
     }
 
@@ -85,7 +87,7 @@ public class SessionManager {
         editor.clear();
         editor.commit();
 
-        // After logout redirect user to Loing Activity
+        // After logout redirect user to Long Activity
         Intent i = new Intent(_context, LoginActivity.class);
         // Closing all the Activities
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -108,6 +110,13 @@ public class SessionManager {
         return user;
     }
 
+    public HashMap<String, Integer> getID(){
+        HashMap<String, Integer> user = new HashMap<>();
+        user.put(ID,pref.getInt(ID, 0));
+        user.put(ROLE,pref.getInt(ROLE, 0));
+        return user;
+    }
+
 
 
     public static void saveAuthToken(String token) {
@@ -117,11 +126,11 @@ public class SessionManager {
     }
 
 
-    public String fetchAuthToken(){
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(PREF_USER_TOKEN, pref.getString(PREF_USER_TOKEN,null));
-        return PREF_USER_TOKEN;
-    }
+//    public String fetchAuthToken(){
+//        SharedPreferences.Editor editor = pref.edit();
+//        editor.putString(PREF_USER_TOKEN, pref.getString(PREF_USER_TOKEN,null));
+//        return PREF_USER_TOKEN;
+//    }
 
 
 }
