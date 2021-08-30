@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.data.api.ApiClient;
 import com.example.transporte_pay.data.model.User;
-import com.example.transporte_pay.data.request.RegRequest;
+import com.example.transporte_pay.data.request.UpdateUserPass;
 import com.example.transporte_pay.data.request.UpdateUserRequest;
 import com.example.transporte_pay.utils.AlertDialogManager;
 import com.example.transporte_pay.utils.ChangePassDialog;
@@ -30,6 +31,7 @@ import retrofit2.Response;
 
 public class ProfileActivity extends AppCompatActivity implements ChangePassDialog.DialogListener {
     TextView name, email, changePassLink;
+    EditText currentPass, newPass, confirmPass;
     String uName, uEmail,token, uCurrent, uConfirm, uNew;
     int id, role_id;
     Button updateBtn;
@@ -48,6 +50,10 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassDial
         changePassLink = findViewById(R.id.changePass_link);
         updateBtn = findViewById(R.id.profUpdate_btn);
         loading = findViewById(R.id.progressBar_update);
+        currentPass = findViewById(R.id.currentPass_et);
+        newPass = findViewById(R.id.newPass_et);
+        confirmPass = findViewById(R.id.confirmPass_et);
+
 
         alert = new AlertDialogManager();
         sessionManager = new SessionManager(getApplicationContext());
@@ -74,7 +80,9 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassDial
             }
             openUpdateData();
         });
-        changePassLink.setOnClickListener(v -> openDialog());
+        changePassLink.setOnClickListener(v -> {
+            openDialog();
+        });
     }
 
     private void openUpdateData() {
@@ -83,7 +91,6 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassDial
         updateUserRequestRequest.setEmail(email.getText().toString());
         updateUserRequestRequest.setId(id);
         updateUserRequestRequest.setRole_id(role_id);
-
         loading.setVisibility(View.VISIBLE);
 
         Call<User> profileResponseCall = ApiClient.getUserClient().
@@ -119,9 +126,18 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassDial
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e("error", "signInResult:failed code=" +t.getMessage());
+                gotoErrorMessage();
             }
         });
     }
+
+    private void gotoErrorMessage() {
+        alert.showAlertDialog(ProfileActivity.this,
+                "ERROR",
+                "Please try Again",
+                false);
+    }
+
 
     private String capitalize(String capString){
         StringBuffer capBuffer = new StringBuffer();
@@ -137,9 +153,50 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassDial
         passDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
+    private void openUpdatePass() {
+        UpdateUserPass updateUserPass = new UpdateUserPass();
+        updateUserPass.setOld_password(uCurrent);
+        updateUserPass.setNew_password(uNew);
+        updateUserPass.setNew_password_confirmation(uConfirm);
+
+        Call<User> userCall = ApiClient.getUserClient().updatePass(updateUserPass,"Bearer " + token );
+        userCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()){
+                    User user = response.body();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            alert.showAlertDialog(ProfileActivity.this,
+                                    "SUCCESS",
+                                    "Password Updated",
+                                    true);
+                        }
+                    }, 300);
+                }else {
+                    Toast.makeText(ProfileActivity.this,"UPDATE FAILED", Toast.LENGTH_LONG).show();
+                    alert.showAlertDialog(ProfileActivity.this,
+                            "CHANGE PASSWORD FAILED",
+                            "Please try again",
+                            false);
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("error", "signInResult:failed code=" +t.getMessage());
+                gotoErrorMessage();
+            }
+        });
+    }
+
     @Override
     public void applyTexts(String currentPass, String newPassword, String confirmPass) {
-        Toast.makeText(this, currentPass + newPassword +confirmPass, Toast.LENGTH_SHORT ).show();
         Log.e("CHANGE PASSWORD", "DETAILS: " + currentPass + newPassword +confirmPass);
+        uCurrent = currentPass;
+        uNew = newPassword;
+        uConfirm = confirmPass;
+        Log.e("VIEW IF NULL", "DETAILS: " + uCurrent + uNew + uConfirm);
+        openUpdatePass();
     }
 }

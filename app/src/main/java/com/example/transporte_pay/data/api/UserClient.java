@@ -5,6 +5,7 @@ import com.example.transporte_pay.data.request.GoogleSignInRequest;
 import com.example.transporte_pay.data.request.LoginRequest;
 import com.example.transporte_pay.data.request.RegRequest;
 import com.example.transporte_pay.data.model.User;
+import com.example.transporte_pay.data.request.UpdateUserPass;
 import com.example.transporte_pay.data.request.UpdateUserRequest;
 import com.example.transporte_pay.utils.Constants;
 
@@ -29,4 +30,7 @@ public interface UserClient {
 
     @POST(Constants.UPDATE_DATA)
     Call<User> updateData(@Body UpdateUserRequest updateUserRequest, @Header("Authorization") String auth);
+
+    @POST(Constants.UPDATE_PASS)
+    Call<User> updatePass(@Body UpdateUserPass updateUserPass, @Header("Authorization") String auth);
 }
