@@ -2,6 +2,7 @@ package com.example.transporte_pay.views.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -32,7 +33,7 @@ import retrofit2.Response;
 public class ProfileActivity extends AppCompatActivity implements ChangePassDialog.DialogListener {
     TextView name, email, changePassLink;
     EditText currentPass, newPass, confirmPass;
-    String uName, uEmail,token, uCurrent, uConfirm, uNew;
+    String uName, uEmail,token, gID, uCurrent, uConfirm, uNew;
     int id, role_id;
     Button updateBtn;
     ProgressBar loading;
@@ -63,9 +64,15 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassDial
         uName = hash.get(SessionManager.NAME);
         uEmail = hash.get(SessionManager.EMAIL);
         token = hash.get(SessionManager.PREF_USER_TOKEN);
+        gID = hash.get(SessionManager.G_ID);
 
         name.setText(uName);
         email.setText(uEmail);
+
+        if (gID != null){
+            email.setEnabled(false);
+            changePassLink.setEnabled(false);
+        }
 
         HashMap<String, Integer> hash1 = sessionManager.getID();
         id = hash1.get(SessionManager.ID);
