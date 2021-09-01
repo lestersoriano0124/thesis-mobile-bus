@@ -8,70 +8,112 @@
 
     <View
         android:id="@+id/topview"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="#000B76"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="1dp" />
-
-
-    <TextView
-        android:id="@+id/locationFrom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="42dp"
-        android:layout_weight="1"
-        android:padding="8dp"
-        android:text="LOCATAION 1"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/topview"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        tools:layout_editor_absoluteY="16dp" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:padding="8dp"
-        android:text="TO"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="188dp" />
-
-    <TextView
-        android:id="@+id/locationTo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="42dp"
-        android:layout_weight="1"
-        android:padding="8dp"
-        android:text="LOCATAION 2"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/textView6"
-        app:layout_constraintStart_toStartOf="@+id/topview"
-        tools:layout_editor_absoluteY="16dp" />
-
-    <EditText
-        android:id="@+id/editTextDate2"
-        android:layout_width="327dp"
-        android:layout_height="48dp"
-        android:ems="10"
-        android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="75dp" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="410dp"
-        android:layout_height="580dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topview"></LinearLayout>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/locationFrom_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="LOCATION 1"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="to"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/locationTo_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="LOCATION 2"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_arrow_back"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/date_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="false"
+                android:textAlignment="center"
+                android:inputType="date"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:layout_weight="1"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_arrow_forward" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ticketList_RV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

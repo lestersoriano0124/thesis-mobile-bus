@@ -72,6 +72,9 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassDial
         if (gID != null){
             email.setEnabled(false);
             changePassLink.setEnabled(false);
+        }else{
+            email.setEnabled(true);
+            changePassLink.setEnabled(true);
         }
 
         HashMap<String, Integer> hash1 = sessionManager.getID();
