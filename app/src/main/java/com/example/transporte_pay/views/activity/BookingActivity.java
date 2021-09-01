@@ -1,14 +1,10 @@
 package com.example.transporte_pay.views.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
@@ -20,13 +16,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.transporte_pay.R;
-import com.example.transporte_pay.adapter.ScheduleAdapter;
 import com.example.transporte_pay.data.api.ApiClient;
 import com.example.transporte_pay.data.model.Routes;
-import com.example.transporte_pay.data.model.Schedule;
-import com.example.transporte_pay.data.request.ScheduleRequest;
 import com.example.transporte_pay.data.response.RoutesResponse;
-import com.example.transporte_pay.data.response.ScheduleResponse;
 import com.example.transporte_pay.utils.AlertDialogManager;
 import com.example.transporte_pay.utils.SessionManager;
 import com.google.gson.Gson;
@@ -54,8 +46,6 @@ public class BookingActivity extends AppCompatActivity{
     AlertDialogManager alert;
     DatePicker datePicker;
     Button booking;
-    Adapter adapter;
-    RecyclerView recyclerView;
     private final ArrayList<String> destinationList = new ArrayList<>();
     private final ArrayList<String> StartingPointList = new ArrayList<>();
 
@@ -73,11 +63,10 @@ public class BookingActivity extends AppCompatActivity{
         booking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Calendar cal = Calendar.getInstance();
                 int day = datePicker.getDayOfMonth();
                 int month = (datePicker.getMonth() + 1);
                 int year = datePicker.getYear();
-//YYYY-MM-DD
+
                 if (month < 10 && day < 10) {
                     monthPadded = String.format("%02d",month );
                     dayPadded = String.format("%02d",day );
@@ -98,17 +87,11 @@ public class BookingActivity extends AppCompatActivity{
             }
         });
 
-
-
         alert = new AlertDialogManager();
         routesList = new ArrayList<>();
 
         sessionManager = new SessionManager(getApplicationContext());
         sessionManager.checkLogin();
-
-//        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<String>(getApplicationContext(),
-//                simple_spinner_dropdown_item,
-//                routesList);
 
         HashMap<String, String> user = sessionManager.getUSerDetails();
         token = user.get(SessionManager.PREF_USER_TOKEN);
@@ -157,7 +140,6 @@ public class BookingActivity extends AppCompatActivity{
                                uFrom =  mDestination;
                                uFromID = mID;
                                Log.e("mSelected", "-----------" + mID + mDestination);
-
                            }
 
                            @Override
@@ -203,19 +185,4 @@ public class BookingActivity extends AppCompatActivity{
         });
 
     }
-
-
-    private void PutDataSomewhere(List<Routes> routesList) throws JSONException {
-//        destinationAdapter = new DestinationAdapter((ArrayList<BusRoutes>) routesList);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(destinationAdapter);
-
-//        Log.e("ROUTE", "***" + routesList);
-//
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, simple_spinner_item, routesList);
-//        arrayAdapter.setDropDownViewResource(simple_spinner_dropdown_item);
-//        destinationFrom.setAdapter((SpinnerAdapter) arrayAdapter);
-
-    }
-
 }

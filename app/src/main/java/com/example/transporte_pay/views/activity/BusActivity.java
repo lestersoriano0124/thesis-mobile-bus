@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,7 +20,6 @@ import com.example.transporte_pay.utils.SessionManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,11 +29,9 @@ public class BusActivity extends AppCompatActivity {
     int uToID, uFromID;
     String token, uDate, to , from;
     RecyclerView recyclerView;
-    Adapter adapter;
     TextView from_tv, to_tv;
     EditText date;
     SessionManager sessionManager;
-    List<Schedule> scheduleList;
     ScheduleAdapter scheduleAdapter;
 
     @Override
@@ -48,9 +44,6 @@ public class BusActivity extends AppCompatActivity {
         to_tv= findViewById(R.id.locationTo_tv);
         date = findViewById(R.id.date_et);
         recyclerView = findViewById(R.id.ticketList_RV);
-//        RecyclerView.LayoutManager layoutManager =
-//                new LinearLayoutManager(getApplicationContext());
-//        recyclerView.setLayoutManager(layoutManager);
         scheduleAdapter = new ScheduleAdapter();
 
         sessionManager = new SessionManager(getApplicationContext());
@@ -74,9 +67,7 @@ public class BusActivity extends AppCompatActivity {
             from_tv.setText(from);
             date.setText(uDate);
 
-//            Log.e("DATA", "************* TEST: " + to_tv + from_tv + date);
             Log.e("DATA", "************* TEST: " + uToID + uFromID + uDate);
-
         }
 
         gotoSchedule();
@@ -94,27 +85,15 @@ public class BusActivity extends AppCompatActivity {
             public void onResponse(Call<ScheduleResponse> call, Response<ScheduleResponse> response) {
                 if (response.isSuccessful()){
                     ArrayList<Schedule> schedules = response.body().getSchedule();
-//                    scheduleList = new ArrayList<>(Arrays.asList(scheduleResponse.getSchedule()));
-                      scheduleAdapter.setData(schedules);
-//                    putDataOnRecyclerView(scheduleList);
+                    scheduleAdapter.setData(schedules);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     recyclerView.setAdapter(scheduleAdapter);
                 }
             }
-
             @Override
             public void onFailure(Call<ScheduleResponse> call, Throwable t) {
-
+                Log.e("error", "busActivity:failed code=" +t.getMessage());
             }
         });
-    }
-
-    private void putDataOnRecyclerView(List<Schedule> scheduleList) {
-//        scheduleAdapter = new ScheduleAdapter(scheduleList);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(scheduleAdapter);
-//
-//        Log.e("ROUTE", "***" + scheduleList);
-//
     }
 }
