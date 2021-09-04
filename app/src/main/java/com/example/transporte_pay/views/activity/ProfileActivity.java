@@ -2,7 +2,6 @@ package com.example.transporte_pay.views.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -69,13 +68,11 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassDial
         name.setText(uName);
         email.setText(uEmail);
 
-        if (gID != null){
-            email.setEnabled(false);
-            changePassLink.setEnabled(false);
-        }else{
-            email.setEnabled(true);
-            changePassLink.setEnabled(true);
-        }
+//        if (gID != null){
+//            email.setEnabled(false);
+//        } else {
+//            email.setEnabled(true);
+//        }
 
         HashMap<String, Integer> hash1 = sessionManager.getID();
         id = hash1.get(SessionManager.ID);
