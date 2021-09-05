@@ -21,17 +21,26 @@ import java.util.List;
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder>{
     private List<Schedule> scheduleList;
     private Context context;
+    private RecyclerViewClickListener listener;
 
 //    public ScheduleAdapter(){
 //
 //    }
+    public interface RecyclerViewClickListener {
+        void OnClick(View v, int position);
+    }
 
-    public void setData(ArrayList<Schedule> schedules) {
+    public void RecyclerViewClickListener (RecyclerViewClickListener listener){
+        this.listener = listener;
+    }
+
+    public void setData(ArrayList<Schedule> schedules, RecyclerViewClickListener listener) {
         this.scheduleList = schedules;
+        this.listener = listener;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView aTime, dTime, plateNo, seat, fare;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -40,6 +49,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             plateNo = (TextView) itemView.findViewById(R.id.plateNo_tv);
             seat = (TextView) itemView.findViewById(R.id.seats_tv);
             fare = (TextView) itemView.findViewById(R.id.fare_tv);
+            itemView.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View v) {
+            listener.OnClick(itemView,getAdapterPosition());
         }
     }
 
@@ -51,7 +65,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 //                .inflate(R.layout.list_item,parent, false );
         context = parent.getContext();
 
-        return new  ScheduleAdapter.ViewHolder(LayoutInflater.from(context)
+        return new ScheduleAdapter.ViewHolder(LayoutInflater.from(context)
                 .inflate(R.layout.list_item,parent,false));
     }
 
@@ -64,6 +78,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         holder.plateNo.setText(scheduleList.get(position).getBus().getPlateNumber());
         holder.fare.setText(Integer.toString(scheduleList.get(position).getFare()));
         holder.seat.setText(Integer.toString(scheduleList.get(position).getBus().getCapacity()));
+//        holder.bind(schedule, listener);
     }
 
     @Override

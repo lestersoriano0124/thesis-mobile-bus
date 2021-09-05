@@ -1,8 +1,10 @@
 package com.example.transporte_pay.data.api;
 
 import com.example.transporte_pay.data.request.ScheduleRequest;
+import com.example.transporte_pay.data.request.TransactionRequest;
 import com.example.transporte_pay.data.response.RoutesResponse;
 import com.example.transporte_pay.data.response.ScheduleResponse;
+import com.example.transporte_pay.data.response.TransactionResponse;
 import com.example.transporte_pay.utils.Constants;
 
 import retrofit2.Call;
@@ -19,5 +21,10 @@ public interface BusClient {
     @POST(Constants.BUS_ROUTES2)
     Call<ScheduleResponse> getSchedule(
             @Body ScheduleRequest scheduleRequest,
+            @Header("Authorization") String auth);
+
+    @POST(Constants.BUS_CONFIRM)
+    Call<TransactionResponse> getTransaction (
+            @Body TransactionRequest transactionRequest,
             @Header("Authorization") String auth);
 }

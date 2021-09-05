@@ -9,5 +9,6 @@ public final class Constants {
     public static final String UPDATE_PASS = "update_password";
     public static final String BUS_ROUTES = "buses/bookings/step/one/";
     public static final String BUS_ROUTES2 = "buses/bookings/step/two/";
+    public static final String BUS_CONFIRM = "buses/bookings/confirm";
 
 }

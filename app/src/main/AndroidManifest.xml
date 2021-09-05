@@ -17,7 +17,8 @@
         android:theme="@style/Theme.Transporte_pay"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
-        <activity android:name=".views.activity.ProfileActivity"></activity>
+        <activity android:name=".views.activity.PaymentActivity"></activity>
+        <activity android:name=".views.activity.ProfileActivity" />
         <activity android:name=".views.activity.TravelLogsActivity" />
         <activity android:name=".views.activity.BusActivity" />
         <activity android:name=".views.activity.BookingActivity" />
