@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.data.model.Schedule;
-import com.example.transporte_pay.data.response.ScheduleResponse;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -66,7 +65,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         context = parent.getContext();
 
         return new ScheduleAdapter.ViewHolder(LayoutInflater.from(context)
-                .inflate(R.layout.list_item,parent,false));
+                .inflate(R.layout.schedule_list,parent,false));
     }
 
     @Override
