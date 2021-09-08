@@ -147,8 +147,8 @@ public class BusActivity extends AppCompatActivity {
 //                        .putExtra("number", quantity);
 //                startActivity(intent);
 
-                uQuantity = schedules.get(position).getId();
-                uSchedID =  quantity;
+                uSchedID = schedules.get(position).getId();
+                uQuantity =  quantity;
 
                 gotoConfirm();
             }
