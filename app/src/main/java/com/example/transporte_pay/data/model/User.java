@@ -56,8 +56,6 @@ public class User implements Serializable {
         return token;
     }
 
-
-
     public void setToken(String token) {
         this.token = token;
     }

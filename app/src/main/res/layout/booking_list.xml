@@ -60,8 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dip"
-                android:background="@drawable/round_border"
-                android:text="EDIT" />
+                android:text="VIEW" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

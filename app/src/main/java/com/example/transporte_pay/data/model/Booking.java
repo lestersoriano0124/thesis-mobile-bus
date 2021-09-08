@@ -1,0 +1,172 @@
+package com.example.transporte_pay.data.model;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+public class Booking {
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("user_id")
+    @Expose
+    private Integer userId;
+    @SerializedName("schedule_id")
+    @Expose
+    private Integer scheduleId;
+    @SerializedName("bus_id")
+    @Expose
+    private Integer busId;
+    @SerializedName("conductor_id")
+    @Expose
+    private Integer conductorId;
+    @SerializedName("fare_amount")
+    @Expose
+    private Integer fareAmount;
+    @SerializedName("quantity")
+    @Expose
+    private Integer quantity;
+    @SerializedName("grand_total")
+    @Expose
+    private Integer grandTotal;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
+    @SerializedName("updated_at")
+    @Expose
+    private String updatedAt;
+    @SerializedName("deleted_at")
+    @Expose
+    private Object deletedAt;
+    @SerializedName("user")
+    @Expose
+    private User user;
+    @SerializedName("bus")
+    @Expose
+    private Bus bus;
+    @SerializedName("schedule")
+    @Expose
+    private Schedule schedule;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getScheduleId() {
+        return scheduleId;
+    }
+
+    public void setScheduleId(Integer scheduleId) {
+        this.scheduleId = scheduleId;
+    }
+
+    public Integer getBusId() {
+        return busId;
+    }
+
+    public void setBusId(Integer busId) {
+        this.busId = busId;
+    }
+
+    public Integer getConductorId() {
+        return conductorId;
+    }
+
+    public void setConductorId(Integer conductorId) {
+        this.conductorId = conductorId;
+    }
+
+    public Integer getFareAmount() {
+        return fareAmount;
+    }
+
+    public void setFareAmount(Integer fareAmount) {
+        this.fareAmount = fareAmount;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Integer getGrandTotal() {
+        return grandTotal;
+    }
+
+    public void setGrandTotal(Integer grandTotal) {
+        this.grandTotal = grandTotal;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Object getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Object deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Bus getBus() {
+        return bus;
+    }
+
+    public void setBus(Bus bus) {
+        this.bus = bus;
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
+    }
+}

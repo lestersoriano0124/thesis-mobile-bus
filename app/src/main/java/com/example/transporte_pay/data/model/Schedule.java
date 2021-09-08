@@ -10,6 +10,12 @@ public class Schedule {
     @SerializedName("bus_id")
     @Expose
     private Integer busId;
+    @SerializedName("driver_id")
+    @Expose
+    private Integer driverId;
+    @SerializedName("conductor_id")
+    @Expose
+    private Integer conductorId;
     @SerializedName("user_id")
     @Expose
     private Integer userId;
@@ -43,6 +49,28 @@ public class Schedule {
     @SerializedName("bus")
     @Expose
     private Bus bus;
+    @SerializedName("starting_point")
+    @Expose
+    private StartingPoint startingPoint;
+    @SerializedName("destination")
+    @Expose
+    private Destination destination;
+
+    public StartingPoint getStartingPoint() {
+        return startingPoint;
+    }
+
+    public void setStartingPoint(StartingPoint startingPoint) {
+        this.startingPoint = startingPoint;
+    }
+
+    public Destination getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Destination destination) {
+        this.destination = destination;
+    }
 
     public Integer getId() {
         return id;
@@ -58,6 +86,22 @@ public class Schedule {
 
     public void setBusId(Integer busId) {
         this.busId = busId;
+    }
+
+    public Integer getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(Integer driverId) {
+        this.driverId = driverId;
+    }
+
+    public Integer getConductorId() {
+        return conductorId;
+    }
+
+    public void setConductorId(Integer conductorId) {
+        this.conductorId = conductorId;
     }
 
     public Integer getUserId() {

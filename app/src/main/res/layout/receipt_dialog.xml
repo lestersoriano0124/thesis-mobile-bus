@@ -12,14 +12,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:background="@drawable/ic_close"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="#FB0505"
         android:clickable="true"
         android:text="Close" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="RECEIPT"
+        android:text="OFFICIAL RECEIPT"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold" />

@@ -5,13 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,12 +17,12 @@ import android.widget.Toast;
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.adapter.ScheduleAdapter;
 import com.example.transporte_pay.data.api.ApiClient;
+import com.example.transporte_pay.data.model.Booking;
 import com.example.transporte_pay.data.model.Routes;
 import com.example.transporte_pay.data.model.Schedule;
 import com.example.transporte_pay.data.request.ScheduleRequest;
 import com.example.transporte_pay.data.request.TransactionRequest;
 import com.example.transporte_pay.data.response.ScheduleResponse;
-import com.example.transporte_pay.data.response.TransactionResponse;
 import com.example.transporte_pay.utils.AlertDialogManager;
 import com.example.transporte_pay.utils.SessionManager;
 import com.google.gson.Gson;
@@ -159,13 +157,13 @@ public class BusActivity extends AppCompatActivity {
 
     private void gotoConfirm() {
         TransactionRequest transactionRequest = new TransactionRequest();
-        transactionRequest.setScheduleID(uQuantity);
-        transactionRequest.setQuantity(uQuantity);
+        transactionRequest.setScheduleID(uSchedID);
+        transactionRequest.setQuantity(quantity);
 
-        Call<TransactionResponse> transCall = ApiClient.getBusClient().getTransaction(transactionRequest, "Bearer " + token);
-        transCall.enqueue(new Callback<TransactionResponse>() {
+        Call<Booking> transCall = ApiClient.getBusClient().getTransaction(transactionRequest, "Bearer " + token);
+        transCall.enqueue(new Callback<Booking>() {
             @Override
-            public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+            public void onResponse(Call<Booking> call, Response<Booking> response) {
                 if (response.isSuccessful()){
                     String getResponse = new Gson().toJson(response.body());
                     List<Routes> routesList = new ArrayList<>();
@@ -188,7 +186,7 @@ public class BusActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<TransactionResponse> call, Throwable t) {
+            public void onFailure(Call<Booking> call, Throwable t) {
                 Log.e("error", "busActivity:failed code=" +t.getMessage());
             }
         });
