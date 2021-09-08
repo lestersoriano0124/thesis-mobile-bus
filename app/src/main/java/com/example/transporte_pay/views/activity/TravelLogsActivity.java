@@ -4,14 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.adapter.BookingAdapter;
+import com.example.transporte_pay.adapter.ScheduleAdapter;
 import com.example.transporte_pay.data.api.ApiClient;
 import com.example.transporte_pay.data.model.Booking;
 import com.example.transporte_pay.data.response.TransactionResponse;
+import com.example.transporte_pay.utils.AlertDialogManager;
 import com.example.transporte_pay.utils.SessionManager;
 
 import java.util.ArrayList;
@@ -41,7 +48,7 @@ public class TravelLogsActivity extends AppCompatActivity {
         HashMap<String, String> user = sessionManager.getUSerDetails();
         token = user.get(SessionManager.PREF_USER_TOKEN);
 
-       bookingAdapter = new BookingAdapter(getApplicationContext());
+       bookingAdapter = new BookingAdapter();
 
         goToBookingList();
 
