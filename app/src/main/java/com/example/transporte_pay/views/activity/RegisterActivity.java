@@ -21,6 +21,9 @@ import com.example.transporte_pay.data.model.User;
 import com.example.transporte_pay.utils.AlertDialogManager;
 import com.example.transporte_pay.utils.SessionManager;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,14 +71,14 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, "Email/Password is Required", Toast.LENGTH_LONG).show();
                 alert.showAlertDialog(RegisterActivity.this,
                         "FAILED",
-                        "Email/Password is Required",
+                        "Name/Email/Password is Required, Don't leave it blank.",
                         false);
             }else if (!TextUtils.equals(password.getText().toString(), c_pass.getText().toString())){
                 alert.showAlertDialog(RegisterActivity.this,
                         "FAILED",
                         "Password did not match, Please Try Again",
                         false);
-            }else if(name.length()<10){
+            }else if(name.length()<8){
                 alert.showAlertDialog(RegisterActivity.this,
                         "FAILED",
                         "Please Provide your Full Name",
@@ -103,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
         Call<User> registerResponseCall = ApiClient.getUserClient().userRegister(regRequest);
         registerResponseCall.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(@NotNull Call<User> call, @NotNull Response<User> response) {
                 if (response.isSuccessful()){
                     loading.setVisibility(View.GONE);
                     Toast.makeText(RegisterActivity.this,"Account Registered", Toast.LENGTH_LONG).show();
@@ -112,22 +115,19 @@ public class RegisterActivity extends AppCompatActivity {
                             "Account Registered",
                             true);
                     User user = response.body();
+                    assert user != null;
                     String token = user.getToken();
-                    Log.e("TOKEN","******************** " + token);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            getName = user.getName();
-                            getEmail = user.getEmail();
-                            getRole = user.getRole_id();
-                            getGooId = user.getGoogle_id();
-                            id = user.getId();
-                            sessionManager.saveAuthToken(token);
-                            sessionManager.createSession(getName, getEmail,getRole,getGooId,id);
-                            startActivity(new Intent(RegisterActivity.this,
-                                    MainActivity.class).
-                                    putExtra("data", user.getToken()));
-                        }
+                    new Handler().postDelayed(() -> {
+                        getName = user.getName();
+                        getEmail = user.getEmail();
+                        getRole = user.getRole_id();
+                        getGooId = user.getGoogle_id();
+                        id = user.getId();
+                        SessionManager.saveAuthToken(token);
+                        sessionManager.createSession(getName, getEmail,getRole,getGooId,id);
+                        startActivity(new Intent(RegisterActivity.this,
+                                MainActivity.class).
+                                putExtra("data", user.getToken()));
                     }, 300);
                     loading.setVisibility(View.GONE);
                     registerButton.setVisibility(View.VISIBLE);
@@ -138,19 +138,20 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(@NotNull Call<User> call, @NotNull Throwable t) {
                 Log.w("error", "signInResult:failed code=" +t.getMessage());
                 failedAlert();
                 Log.e("error", "signInResult:failed code=" +t.getMessage());
                 loading.setVisibility(View.GONE);
+                registerButton.setVisibility(View.VISIBLE);
             }
         });
     }
 
     private void failedAlert() {
         alert.showAlertDialog(RegisterActivity.this,
-                "FAILED",
-                "LOGIN FAILED",
+                "REGISTER FAILED",
+                "Email is already taken, Please try something new",
                 false);
     }
 
@@ -158,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity {
         StringBuffer capBuffer = new StringBuffer();
         Matcher capMatcher = Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(capString);
         while (capMatcher.find()){
-            capMatcher.appendReplacement(capBuffer, capMatcher.group(1).toUpperCase() + capMatcher.group(2).toLowerCase());
+            capMatcher.appendReplacement(capBuffer, Objects.requireNonNull(capMatcher.group(1)).toUpperCase() + Objects.requireNonNull(capMatcher.group(2)).toLowerCase());
         }
         return capMatcher.appendTail(capBuffer).toString();
     }
