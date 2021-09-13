@@ -17,4 +17,12 @@
 
     <string name="locations">%1$s to %2$s</string>
 
+    <string name="TermsAndAConditions">I hereby authorize Elizabeth Joy Transport to collect and process the data indicated herein for the purpose of contact tracing effecting control of the COVID-19 transmission. I understand that my personal information is protected by RA 10173 or the Data Privacy Act of 2012 and that this form will be destroyed after 30 days from the date accpmplishment, following the National Archives of the Philippines protocol.</string>
+    <string name="trace_title">Contact Tracing Form</string>
+    <string name="address">Complete Address</string>
+    <string name="date_of_visit">Date Of Visit</string>
+    <string name="time_of_visit">Time of Visit</string>
+    <string name="temperature">Temperature</string>
+    <string name="contact_number">Contact Number</string>
+
 </resources>
