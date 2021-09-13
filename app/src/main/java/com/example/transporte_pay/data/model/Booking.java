@@ -16,6 +16,9 @@ public class Booking {
     @SerializedName("bus_id")
     @Expose
     private Integer busId;
+    @SerializedName("driver_id")
+    @Expose
+    private Integer driverId;
     @SerializedName("conductor_id")
     @Expose
     private Integer conductorId;
@@ -28,9 +31,9 @@ public class Booking {
     @SerializedName("grand_total")
     @Expose
     private Integer grandTotal;
-    @SerializedName("status")
+    @SerializedName("status_id")
     @Expose
-    private String status;
+    private Integer statusId;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -46,6 +49,9 @@ public class Booking {
     @SerializedName("bus")
     @Expose
     private Bus bus;
+    @SerializedName("status")
+    @Expose
+    private Status status;
     @SerializedName("schedule")
     @Expose
     private Schedule schedule;
@@ -82,6 +88,14 @@ public class Booking {
         this.busId = busId;
     }
 
+    public Integer getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(Integer driverId) {
+        this.driverId = driverId;
+    }
+
     public Integer getConductorId() {
         return conductorId;
     }
@@ -114,12 +128,12 @@ public class Booking {
         this.grandTotal = grandTotal;
     }
 
-    public String getStatus() {
-        return status;
+    public Integer getStatusId() {
+        return statusId;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
     }
 
     public String getCreatedAt() {
@@ -160,6 +174,14 @@ public class Booking {
 
     public void setBus(Bus bus) {
         this.bus = bus;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Schedule getSchedule() {

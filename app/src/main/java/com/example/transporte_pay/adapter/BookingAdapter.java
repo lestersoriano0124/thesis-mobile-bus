@@ -80,7 +80,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
 
         holder.locations.setText(locations);
         holder.date.setText(bookingList.get(position).getSchedule().getScheduleDate());
-        holder.status.setText(bookingList.get(position).getStatus());
+        holder.status.setText(bookingList.get(position).getStatus().getTitle());
 
         holder.view.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
@@ -113,25 +113,16 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             fare.setText(Integer.toString(bookingList.get(position).getFareAmount()));
             quantity.setText(Integer.toString(bookingList.get(position).getQuantity()));
             gTotal.setText(Integer.toString(bookingList.get(position).getGrandTotal()));
-            close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            close.setOnClickListener(v1 -> {
 
-                }
             });
-            bookingPay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.e("CLICK", "YOU CLICKED BOOKING PAY BUTTON");
-                    Intent intent = new Intent(context, PaymentActivity.class);
-                    context.startActivity(intent);
-                }
+            bookingPay.setOnClickListener(v13 -> {
+                Log.e("CLICK", "YOU CLICKED BOOKING PAY BUTTON");
+                Intent intent = new Intent(context, PaymentActivity.class);
+                context.startActivity(intent);
             });
-            bookingCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            bookingCancel.setOnClickListener(v12 -> {
 
-                }
             });
             builder.setView(dialogView)
                     .setCancelable(true)
