@@ -1,13 +1,12 @@
 package com.example.transporte_pay.views.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,8 +22,8 @@ import com.example.transporte_pay.utils.AlertDialogManager;
 import com.example.transporte_pay.utils.SessionManager;
 import com.google.gson.Gson;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -49,6 +48,7 @@ public class BookingActivity extends AppCompatActivity{
     private final ArrayList<String> destinationList = new ArrayList<>();
     private final ArrayList<String> StartingPointList = new ArrayList<>();
 
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,31 +60,27 @@ public class BookingActivity extends AppCompatActivity{
         datePicker = findViewById(R.id.editTextDate);
         booking = findViewById(R.id.booking_btn);
 
-        booking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int day = datePicker.getDayOfMonth();
-                int month = (datePicker.getMonth() + 1);
-                int year = datePicker.getYear();
+        booking.setOnClickListener(v -> {
+            int day = datePicker.getDayOfMonth();
+            int month = (datePicker.getMonth() + 1);
+            int year = datePicker.getYear();
 
-                if (month < 10 && day < 10) {
-                    monthPadded = String.format("%02d",month );
-                    dayPadded = String.format("%02d",day );
-                }
+            monthPadded = String.format("%02d",month );
+            dayPadded = String.format("%02d",day );
 
-                uDate = year + "-" + monthPadded + "-" + dayPadded;
-                Log.e("DATE", "********** DATE: " + uDate );
-                Log.e("LOCATIONS", "********** FROM: "+ uFrom + "  TO: " + uTo);
-                Log.e("IDS", "********** FROM ID: "+ uFromID + "  TO ID: " + uToID);
 
-                Intent intent = new Intent(BookingActivity.this, BusActivity.class)
-                        .putExtra("fromID", uFromID)
-                        .putExtra("toID", uToID)
-                        .putExtra("from", uFrom)
-                        .putExtra("to", uTo)
-                        .putExtra("date", uDate);
-                startActivity(intent);
-            }
+            uDate = year + "-" + monthPadded + "-" + dayPadded;
+            Log.e("DATE", "********** DATE: " + uDate);
+            Log.e("LOCATIONS", "********** FROM: "+ uFrom + "  TO: " + uTo);
+            Log.e("IDS", "********** FROM ID: "+ uFromID + "  TO ID: " + uToID);
+
+            Intent intent = new Intent(BookingActivity.this, BusActivity.class)
+                    .putExtra("fromID", uFromID)
+                    .putExtra("toID", uToID)
+                    .putExtra("from", uFrom)
+                    .putExtra("to", uTo)
+                    .putExtra("date", uDate);
+            startActivity(intent);
         });
 
         alert = new AlertDialogManager();
@@ -104,10 +100,11 @@ public class BookingActivity extends AppCompatActivity{
         Call<RoutesResponse> call = ApiClient.getBusClient().getRoutes("Bearer " + token);
         call.enqueue(new Callback<RoutesResponse>() {
             @Override
-            public void onResponse(Call<RoutesResponse> call, Response<RoutesResponse> response) {
+            public void onResponse(@NotNull Call<RoutesResponse> call, @NotNull Response<RoutesResponse> response) {
                 if (response.isSuccessful()){
                    try {
-                      String getResponse = new Gson().toJson(response.body().getRoutes());
+                       assert response.body() != null;
+                       String getResponse = new Gson().toJson(response.body().getRoutes());
                       List<Routes> routesList = new ArrayList<>();
                       JSONArray jsonArray = new JSONArray(getResponse);
                       for (int i=0;i<jsonArray.length();i++) {
@@ -179,7 +176,7 @@ public class BookingActivity extends AppCompatActivity{
             }
 
             @Override
-            public void onFailure(Call<RoutesResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<RoutesResponse> call, @NotNull Throwable t) {
                 Log.e("error", "signInResult:failed code=" +t.getMessage());
             }
         });
