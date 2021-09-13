@@ -73,14 +73,10 @@ public class LoginActivity extends AppCompatActivity {
         alert = new AlertDialogManager();
 
         sessionManager = new SessionManager(this);
-        Toast.makeText(getApplicationContext(), "User Login Status: " + sessionManager.isLoggedIn(), Toast.LENGTH_LONG).show();
 
         reg_link.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
-            Toast.makeText(LoginActivity.this,
-                    "YEY",
-                    Toast.LENGTH_LONG).show();
         });
 
         loginButton.setOnClickListener(v -> {
@@ -125,7 +121,6 @@ public class LoginActivity extends AppCompatActivity {
                     User user = response.body();
                     String token = user.getToken();
                     String lName = user.getName();
-                    Log.e("RESPONSE","********************" + token + lName);
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -138,7 +133,6 @@ public class LoginActivity extends AppCompatActivity {
 
                             sessionManager.saveAuthToken(token);
                             sessionManager.createSession(getName, getEmail,getRole,getGooId,id);
-                            Log.e("TOKEN","******************** " + getName);
 
                             startActivity(new Intent(LoginActivity.this,MainActivity.class)
                                     .putExtra("token", user.getToken()));
@@ -152,7 +146,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e("error", "signInResult:failed code=" +t.getMessage());
-//                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
                 alert.showAlertDialog(LoginActivity.this,
                         "ERROR",
                         "Login Failed, Please try again",

@@ -114,8 +114,6 @@ public class BookingActivity extends AppCompatActivity{
                           routes.setName(jsonObject.getString("name"));
 
                           routesList.add(routes);
-                          Log.e("RESULT", "-----------" + getResponse);
-                          Log.e("ROUTES NAME", "-----------" + routesList.get(i).getName());
                       }
 
                       for (int i=0;i<routesList.size();i++) {
@@ -136,7 +134,6 @@ public class BookingActivity extends AppCompatActivity{
                                String mDestination = routesList.get(position).getName();
                                uFrom =  mDestination;
                                uFromID = mID;
-                               Log.e("mSelected", "-----------" + mID + mDestination);
                            }
 
                            @Override
@@ -160,7 +157,6 @@ public class BookingActivity extends AppCompatActivity{
                                String mDestination = routesList.get(position).getName();
                                 uTo = mDestination;
                                 uToID = mID;
-                               Log.e("mSelectedTO", "-----------" + mID + mDestination);
                            }
                            @Override
                            public void onNothingSelected(AdapterView<?> parent) {

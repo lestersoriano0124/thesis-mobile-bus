@@ -68,12 +68,6 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassDial
         name.setText(uName);
         email.setText(uEmail);
 
-//        if (gID != null){
-//            email.setEnabled(false);
-//        } else {
-//            email.setEnabled(true);
-//        }
-
         HashMap<String, Integer> hash1 = sessionManager.getID();
         id = hash1.get(SessionManager.ID);
         role_id = hash1.get(SessionManager.ROLE);
