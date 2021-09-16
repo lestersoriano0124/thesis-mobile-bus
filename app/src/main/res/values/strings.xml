@@ -24,5 +24,6 @@
     <string name="time_of_visit">Time of Visit</string>
     <string name="temperature">Temperature</string>
     <string name="contact_number">Contact Number</string>
+    <string name="save">Save</string>
 
 </resources>
