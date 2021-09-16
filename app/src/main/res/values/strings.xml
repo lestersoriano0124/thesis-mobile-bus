@@ -29,5 +29,7 @@
     <string name="bus_location">Bus Location</string>
     <string name="contact_tracing">Contact Tracing</string>
     <string name="account_details">Account Details</string>
+    <string name="view_passengers">View Passengers</string>
+    <string name="destination_logs">Destination Logs</string>
 
 </resources>
