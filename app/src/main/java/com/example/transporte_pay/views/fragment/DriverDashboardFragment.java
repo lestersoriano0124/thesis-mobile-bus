@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.utils.SessionManager;
 import com.example.transporte_pay.views.activity.PassengerActivity;
+import com.example.transporte_pay.views.activity.ProfileActivity;
+import com.example.transporte_pay.views.activity.TravelLogsActivity;
 
 public class DriverDashboardFragment extends Fragment implements View.OnClickListener{
     CardView card1, card2, card3 , card4;
@@ -34,9 +36,12 @@ public class DriverDashboardFragment extends Fragment implements View.OnClickLis
         card4 = view.findViewById(R.id.driverBusLocation_card);
         card1.setOnClickListener(this);
 //        card2.setOnClickListener(this);
-//        card3.setOnClickListener(this);
+        card3.setOnClickListener(this);
 //        card4.setOnClickListener(this);
         return  view;
+
+
+//        mitchell.makenzie@example.net
     }
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -46,7 +51,7 @@ public class DriverDashboardFragment extends Fragment implements View.OnClickLis
         switch (v.getId()) {
             case R.id.driverViewPassenger_card:
                 context = getActivity().getApplicationContext();
-                intent = new Intent(context, PassengerActivity.class);
+                intent = new Intent(context, TravelLogsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
                 break;
@@ -56,7 +61,7 @@ public class DriverDashboardFragment extends Fragment implements View.OnClickLis
 //                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                context.startActivity(intent);
 //                break;
-//            case R.id.account_card:
+//            case R.id.driverAccountDetails_card:
 //                context = getActivity().getApplicationContext();
 //                intent = new Intent(context, ProfileActivity.class);
 //                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
