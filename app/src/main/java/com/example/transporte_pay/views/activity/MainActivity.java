@@ -2,12 +2,14 @@ package com.example.transporte_pay.views.activity;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.transporte_pay.views.fragment.ConductorDashboardFragment;
+import com.example.transporte_pay.views.fragment.DriverDashboardFragment;
 import com.example.transporte_pay.views.fragment.PassengerDashboardFragment;
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.utils.SessionManager;
@@ -31,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     TextView email;
     ImageView profilePic;
     SessionManager sessionManager;
-    String test;
+    String test, getEmail, token;
+    Integer getRoleID;
 
 
 
@@ -49,10 +54,13 @@ public class MainActivity extends AppCompatActivity {
         sessionManager.checkLogin();
 
         HashMap<String, String> userData = sessionManager.getUSerDetails();
-        String getEmail = userData.get(SessionManager.EMAIL);
+        getEmail = userData.get(SessionManager.EMAIL);
+        token = userData.get(SessionManager.PREF_USER_TOKEN);
         email.setText(getEmail);
         test = userData.get(SessionManager.NAME);
 
+        HashMap<String, Integer> ids = sessionManager.getID();
+        getRoleID = ids.get(SessionManager.ROLE);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -66,9 +74,25 @@ public class MainActivity extends AppCompatActivity {
             email.setText(personEmail);
             Glide.with(this).load(String.valueOf(personPhoto)).into(profilePic);
         }
-        showPassengerDash();
-    }
+        // showPassengerDash();
 
+//        Roles
+//        1 admin
+//        2 Bus Driver
+//        3 Conductor
+//        4 Passenger
+
+        switch (getRoleID){
+            case 2: showDriverDash();
+                break;
+            case 3: showConductorDash();
+                break;
+            case 4: showPassengerDash();
+                break;
+            default:
+                Log.e("", "no case");
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,15 +109,30 @@ public class MainActivity extends AppCompatActivity {
         return super.onContextItemSelected(item);
     }
 
-    private void showPassengerDash() {
-        PassengerDashboardFragment passengerDashboardFragment = new PassengerDashboardFragment();
+    private void showDriverDash() {
+        DriverDashboardFragment driverDashboardFragment = new DriverDashboardFragment();
+        fragmentTrans(driverDashboardFragment);
+    }
+
+    private void showConductorDash() {
+        ConductorDashboardFragment conductorDashboardFragment = new ConductorDashboardFragment();
+        fragmentTrans(conductorDashboardFragment);
+    }
+
+    private void fragmentTrans(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
+        fragmentTransaction.replace(R.id.dashboard,fragment).commit();
+    }
+
+    private void showPassengerDash() {
+        PassengerDashboardFragment passengerDashboardFragment = new PassengerDashboardFragment();
+        fragmentTrans(passengerDashboardFragment);
         Bundle data = new Bundle();
         data.putString("message", "Hey Buddy");
 
         passengerDashboardFragment.setArguments(data);
-        fragmentTransaction.replace(R.id.dashboard, passengerDashboardFragment).commit();
+//        fragmentTransaction.replace(R.id.dashboard, passengerDashboardFragment).commit();
     }
 
     private void signOut() {
