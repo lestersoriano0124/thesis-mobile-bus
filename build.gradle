@@ -24,3 +24,12 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+rootProject.ext {
+    retrofit2 = '2.9.0'
+    gsonConverter = '2.8.7'
+    okhttp3 = '5.0.0-alpha.2'
+    bumtechGlide = '4.12.0'
+    cardview = '1.0.0'
+    googleSignIn = '19.2.0'
+}
