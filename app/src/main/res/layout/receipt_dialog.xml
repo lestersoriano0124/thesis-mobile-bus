@@ -6,15 +6,15 @@
     android:orientation="vertical"
     android:padding="32dp">
 
-    <ImageButton
-        android:id="@+id/close_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:background="@drawable/ic_close"
-        android:backgroundTint="#FB0505"
-        android:clickable="true"
-        android:text="Close" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/close_btn"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="right"-->
+<!--        android:background="@drawable/ic_close"-->
+<!--        android:backgroundTint="#FB0505"-->
+<!--        android:clickable="true"-->
+<!--        android:text="Close" />-->
 
     <TextView
         android:layout_width="match_parent"

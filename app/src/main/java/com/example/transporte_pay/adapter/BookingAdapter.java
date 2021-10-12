@@ -26,28 +26,16 @@ import java.util.List;
 public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHolder> {
     private List<Booking> bookingList;
     private Context context;
-//    private BookingAdapter.RecyclerViewClickListener logsListener;
+    private Integer roleId;
 
-//    public BookingAdapter(Context c) {
-//        this.context = c;
-//    }
-
-    public void setBookingList(List<Booking> bookings){
+    public void setBookingList(List<Booking> bookings, Integer r) {
         this.bookingList = bookings;
+        this.roleId = r;
 //        this.logsListener = listener;
         notifyDataSetChanged();
     }
-
-//    public interface RecyclerViewClickListener {
-//        void OnClick(View v, int position);
-//    }
-//
-//    public void RecyclerViewClickListener (BookingAdapter.RecyclerViewClickListener listener){
-//        this.logsListener = listener;
-//    }
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView locations , date , status;
+        TextView locations, date, status, name;
         Button view;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
@@ -56,9 +44,9 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             date = itemView.findViewById(R.id.date_tv);
             status = itemView.findViewById(R.id.status_tv);
             view = itemView.findViewById(R.id.button);
+            name = itemView.findViewById(R.id.passengerName_tv);
         }
     }
-
 
     @NonNull
     @NotNull
@@ -73,10 +61,17 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
     @SuppressLint("StringFormatMatches")
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-        String destination,start, locations;
+        String destination, start, locations, name;
+
+        if (roleId == 2) {
+            holder.name.setVisibility(View.VISIBLE);
+        }
+
+        name = bookingList.get(position).getUser().getName();
+        holder.name.setText(name);
         destination = bookingList.get(position).getSchedule().getDestination().getName();
         start = bookingList.get(position).getSchedule().getStartingPoint().getName();
-        locations = context.getString(R.string.locations,start,destination);
+        locations = context.getString(R.string.locations, start, destination);
 
         holder.locations.setText(locations);
         holder.date.setText(bookingList.get(position).getSchedule().getScheduleDate());
@@ -85,9 +80,9 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         holder.view.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
             View dialogView = LayoutInflater.from(v.getRootView().getContext())
-                    .inflate(R.layout.receipt_dialog,null);
+                    .inflate(R.layout.receipt_dialog, null);
 
-            TextView transId, plateNo, locations1, fare , quantity, gTotal;
+            TextView transId, plateNo, locations1, fare, quantity, gTotal;
             Button bookingPay, bookingCancel;
             ImageView close;
 
@@ -98,24 +93,26 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             quantity = dialogView.findViewById(R.id.qty_tv);
             gTotal = dialogView.findViewById(R.id.gTotal_tv);
 
-            close = dialogView.findViewById(R.id.close_btn);
             bookingPay = dialogView.findViewById(R.id.payment_btn);
             bookingCancel = dialogView.findViewById(R.id.cancel_btn);
 
             //SET DATA
-            String a,b,c;
+            String a, b, c;
             b = bookingList.get(position).getSchedule().getDestination().getName();
             a = bookingList.get(position).getSchedule().getStartingPoint().getName();
-            c = context.getString(R.string.locations,a,b);
+            c = context.getString(R.string.locations, a, b);
             locations1.setText(c);
             transId.setText(Integer.toString(bookingList.get(position).getId()));
             plateNo.setText(bookingList.get(position).getBus().getPlateNumber());
             fare.setText(Integer.toString(bookingList.get(position).getFareAmount()));
             quantity.setText(Integer.toString(bookingList.get(position).getQuantity()));
             gTotal.setText(Integer.toString(bookingList.get(position).getGrandTotal()));
-            close.setOnClickListener(v1 -> {
 
-            });
+            if (roleId == 2) {
+                bookingCancel.setVisibility(View.GONE);
+                bookingPay.setVisibility(View.GONE);
+            }
+
             bookingPay.setOnClickListener(v13 -> {
                 Log.e("CLICK", "YOU CLICKED BOOKING PAY BUTTON");
                 Intent intent = new Intent(context, PaymentActivity.class);

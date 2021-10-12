@@ -61,12 +61,12 @@ public class DriverDashboardFragment extends Fragment implements View.OnClickLis
 //                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                context.startActivity(intent);
 //                break;
-//            case R.id.driverAccountDetails_card:
-//                context = getActivity().getApplicationContext();
-//                intent = new Intent(context, ProfileActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                context.startActivity(intent);
-//                break;
+            case R.id.driverAccountDetails_card:
+                context = getActivity().getApplicationContext();
+                intent = new Intent(context, ProfileActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                break;
 //            case R.id.covid_card:
 //                context = getActivity().getApplicationContext();
 //                intent = new Intent(context, ContactTraceActivity.class);

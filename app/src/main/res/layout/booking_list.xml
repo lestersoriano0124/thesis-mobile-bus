@@ -25,7 +25,18 @@
             android:orientation="vertical"
             android:gravity="right|center_vertical"
             android:layout_weight="12">
-
+            <TextView
+                android:id="@+id/passengerName_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:visibility="visible"
+                android:text="@string/name"
+                android:textAllCaps="true"
+                android:textColor="@color/blue"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/locations_tv"
                 android:layout_width="match_parent"

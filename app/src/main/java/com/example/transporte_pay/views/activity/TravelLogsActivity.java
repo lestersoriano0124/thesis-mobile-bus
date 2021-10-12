@@ -32,6 +32,7 @@ import retrofit2.Response;
 public class TravelLogsActivity extends AppCompatActivity {
     SessionManager sessionManager;
     String token;
+    Integer roleId;
     List<Booking> bookings;
     BookingAdapter bookingAdapter;
     RecyclerView recyclerView;
@@ -48,6 +49,9 @@ public class TravelLogsActivity extends AppCompatActivity {
         HashMap<String, String> user = sessionManager.getUSerDetails();
         token = user.get(SessionManager.PREF_USER_TOKEN);
 
+        HashMap<String, Integer> ids = sessionManager.getID();
+        roleId = ids.get(SessionManager.ROLE);
+
        bookingAdapter = new BookingAdapter();
 
         goToBookingList();
@@ -61,7 +65,7 @@ public class TravelLogsActivity extends AppCompatActivity {
             public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
                 if (response.isSuccessful()){
                     bookings = response.body().getBookings();
-                    bookingAdapter.setBookingList(bookings);
+                    bookingAdapter.setBookingList(bookings, roleId);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     recyclerView.setAdapter(bookingAdapter);
                 }

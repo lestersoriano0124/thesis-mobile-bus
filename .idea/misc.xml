@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/63910/AndroidStudioProjects/transporte_pay/app/src/main/res/layout/activity_booking.xml" value="0.2217223650385604" />
+        <entry key="..\:/Users/63910/AndroidStudioProjects/transporte_pay/app/src/main/res/layout/booking_list.xml" value="0.20277777777777778" />
+        <entry key="..\:/Users/63910/AndroidStudioProjects/transporte_pay/app/src/main/res/layout/fragment_conductor_dashboard.xml" value="0.2217223650385604" />
+        <entry key="..\:/Users/63910/AndroidStudioProjects/transporte_pay/app/src/main/res/layout/fragment_driver_dashboard.xml" value="0.2217223650385604" />
+        <entry key="..\:/Users/63910/AndroidStudioProjects/transporte_pay/app/src/main/res/layout/fragment_passenger_dashboard.xml" value="0.2217223650385604" />
+        <entry key="..\:/Users/63910/AndroidStudioProjects/transporte_pay/app/src/main/res/layout/receipt_dialog.xml" value="0.20277777777777778" />
         <entry key="..\:/Users/Eriq/Desktop/thesis-mobile-bus/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/Eriq/Desktop/thesis-mobile-bus/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22135416666666666" />
       </map>
