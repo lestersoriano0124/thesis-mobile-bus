@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Transporte_pay" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
+        <item name="android:windowNoTitle">true</item>
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryVariant">@color/purple_500</item>
         <item name="colorOnPrimary">@color/white</item>

@@ -134,13 +134,13 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else {
                     Toast.makeText(RegisterActivity.this,"LOGIN FAILED", Toast.LENGTH_LONG).show();
-                    failedAlert();
+                    failedAlert("Error");
                 }
             }
             @Override
             public void onFailure(@NotNull Call<User> call, @NotNull Throwable t) {
                 Log.w("error", "signInResult:failed code=" +t.getMessage());
-                failedAlert();
+                failedAlert(t.getMessage().toString());
                 Log.e("error", "signInResult:failed code=" +t.getMessage());
                 loading.setVisibility(View.GONE);
                 registerButton.setVisibility(View.VISIBLE);
@@ -148,11 +148,13 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void failedAlert() {
+    private void failedAlert(String errorMessage) {
         alert.showAlertDialog(RegisterActivity.this,
                 "REGISTER FAILED",
-                "Email is already taken, Please try something new",
+                errorMessage,
                 false);
+//        "Email is already taken, Please try something new",
+
     }
 
     private String capitalize(String capString){

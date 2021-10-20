@@ -55,6 +55,10 @@ public class Booking {
     @SerializedName("schedule")
     @Expose
     private Schedule schedule;
+    @SerializedName("gcash_number")
+    @Expose
+    private String gcashNumber;
+
 
     public Integer getId() {
         return id;
@@ -160,6 +164,14 @@ public class Booking {
         this.deletedAt = deletedAt;
     }
 
+    public void setGcashNumber(String gcashNumber) {
+        this.gcashNumber = gcashNumber;
+    }
+
+    public String getGcashNumber() {
+        return gcashNumber;
+    }
+
     public User getUser() {
         return user;
     }
@@ -191,4 +203,5 @@ public class Booking {
     public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
     }
+
 }

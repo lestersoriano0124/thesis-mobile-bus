@@ -22,6 +22,9 @@ public class Bus {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    @SerializedName("gcash_number")
+    @Expose
+    private String gcashNumber;
 
     public Integer getId() {
         return id;
@@ -70,4 +73,13 @@ public class Bus {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public void setGcashNumber(String updatedAt) {
+        this.gcashNumber = gcashNumber;
+    }
+
+    public String getGcashNumber() {
+        return gcashNumber;
+    }
+
 }

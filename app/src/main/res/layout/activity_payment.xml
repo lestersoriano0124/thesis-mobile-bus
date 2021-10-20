@@ -1,71 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_centerHorizontal="true"
-    android:background="@drawable/ic_wave__2_"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".views.activity.PaymentActivity">
 
-    <TextView
-        android:id="@+id/textView8"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="CHOOSE YOUR PAYMENT METHOD"
-        android:textColor="@color/white"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline5" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="143dp" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8">
-
-        <LinearLayout
+        android:layout_height="130sp"
+        android:background="@color/blue">
+        <TextView
+            android:id="@+id/textView8"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="5dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_vertical"
+            android:text="PAYMENT METHOD"
+            android:textColor="@color/white"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+    </LinearLayout>
 
-            <Button
-                android:id="@+id/payCash_btn2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="48dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/round_border"
-                android:text="PAY WITH CASH" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/payCash_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="48dp"
-                android:background="@drawable/round_border"
-                android:text="PAY WITH CASH" />
-        </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:id="@+id/form"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:elevation="5dp"
+                    android:orientation="vertical">
+                    <EditText
+                        android:id="@+id/gcashNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="32dp"
+                        android:editable="false"
+                        android:autofillHints="@string/bus"
+                        android:background="@drawable/round_border"
+                        android:drawableStart="@drawable/ic_baseline_local_phone_24"
+                        android:drawablePadding="16dp"
+                        android:ems="10"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:hint="@string/bus"
+                        android:inputType="text"
+                        android:padding="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/form" />
+                    <EditText
+                        android:id="@+id/fullname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="32dp"
+                        android:autofillHints="@string/name"
+                        android:background="@drawable/round_border"
+                        android:drawableStart="@drawable/ic_baseline_person_24"
+                        android:drawablePadding="16dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:ems="10"
+                        android:hint="@string/name"
+                        android:inputType="text"
+                        android:padding="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/form" />
+                    <EditText
+                        android:id="@+id/reference"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="32dp"
+                        android:textColor="@color/black"
+                        android:autofillHints="@string/referencenumber"
+                        android:background="@drawable/round_border"
+                        android:drawableStart="@drawable/ic_baseline_receipt_24"
+                        android:drawablePadding="16dp"
+                        android:textColorHint="@color/black"
+                        android:ems="10"
+                        android:hint="@string/referencenumber"
+                        android:inputType="text"
+                        android:padding="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/form" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageButton
+                            android:id="@+id/uploadBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:layout_marginTop="25dp"
+                            android:layout_marginLeft="30dp"
+                            android:textAlignment="center"
+                            android:tooltipText="Upload Proof"
+                           android:src="@drawable/ic_baseline_photo_camera_24"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="40dp"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:text="Upload Proof"/>
+
+
+                    </LinearLayout>
+
+                    <ImageView
+
+                        android:visibility="invisible"
+                        android:id="@+id/proofImage"
+                        android:layout_gravity="center"
+                        android:layout_width="300sp"
+                        android:layout_height="100sp" />
+                    <CheckBox
+                        android:id="@+id/simpleCheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:textColor="@color/black"
+                        android:text="I here by that information is provided is authentic and i am responsible for legal actions"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_horizontal">
+                    <Button
+                        android:id="@+id/back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="48dp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/round_border"
+                        android:text="GO Back" />
+                    <Button
+                        android:id="@+id/save"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="48dp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/round_border"
+                        android:text="Save" />
+
+                </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+    </ScrollView>
+
+</LinearLayout>

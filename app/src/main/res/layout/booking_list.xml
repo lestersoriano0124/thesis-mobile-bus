@@ -3,75 +3,88 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/ticket_border"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:paddingTop="10dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="10dp"
-        android:weightSum="12">
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="right|center_vertical"
-            android:layout_weight="12">
-            <TextView
-                android:id="@+id/passengerName_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:visibility="visible"
-                android:text="@string/name"
-                android:textAllCaps="true"
-                android:textColor="@color/blue"
-                android:layout_gravity="center"
-                android:layout_marginBottom="5dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/locations_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="LOCATION 1 - LOCATION 2"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/date_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="Date"
-                />
-            <TextView
-                android:id="@+id/status_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="Status" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/ticket_border"
             android:orientation="horizontal"
-            android:gravity="right|center_vertical"
-            android:layout_gravity="center_vertical">
+            android:paddingLeft="16dp"
+            android:paddingTop="10dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="10dp"
+            android:weightSum="12">
 
-            <Button
-                android:id="@+id/button"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dip"
-                android:text="VIEW" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="right|center_vertical"
+                android:layout_weight="12">
+                <TextView
+                    android:id="@+id/passengerName_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:visibility="visible"
+                    android:text="@string/name"
+                    android:textAllCaps="true"
+                    android:textColor="@color/blue"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/locations_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="LOCATION 1 - LOCATION 2"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/date_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:text="Date"
+                    />
+                <TextView
+                    android:id="@+id/status_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:text="Status" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="right|center_vertical"
+                android:layout_gravity="center_vertical">
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dip"
+                    android:textColor="@color/white"
+                    android:background="@drawable/round_border"
+                    android:text="VIEW" />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

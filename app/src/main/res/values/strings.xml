@@ -31,5 +31,7 @@
     <string name="account_details">Account Details</string>
     <string name="view_passengers">View Passengers</string>
     <string name="destination_logs">Destination Logs</string>
+    <string name="bus">Bus Gcash#</string>
+    <string name="referencenumber">Ref#</string>
 
 </resources>

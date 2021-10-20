@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +37,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView locations, date, status, name;
+
         Button view;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
@@ -62,12 +64,17 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         String destination, start, locations, name;
+        String bus_gcash_number;
 
         if (roleId == 2) {
             holder.name.setVisibility(View.VISIBLE);
         }
 
         name = bookingList.get(position).getUser().getName();
+        bus_gcash_number = bookingList.get(position).getBus().getGcashNumber();
+        Log.d("bus id ","******");
+        Log.d("bus id ",bus_gcash_number);
+        Log.d("bus id ","****");
         holder.name.setText(name);
         destination = bookingList.get(position).getSchedule().getDestination().getName();
         start = bookingList.get(position).getSchedule().getStartingPoint().getName();
@@ -116,6 +123,9 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             bookingPay.setOnClickListener(v13 -> {
                 Log.e("CLICK", "YOU CLICKED BOOKING PAY BUTTON");
                 Intent intent = new Intent(context, PaymentActivity.class);
+                intent.putExtra("busGcash", bus_gcash_number);
+                intent.putExtra("fullname", name);
+                intent.putExtra("transId", Integer.toString(bookingList.get(position).getId()));
                 context.startActivity(intent);
             });
             bookingCancel.setOnClickListener(v12 -> {

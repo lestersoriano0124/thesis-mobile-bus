@@ -42,6 +42,7 @@ public class ApiClient {
         return  getRetrofit().create(BusClient.class);
     }
 
+    public static PaymentClient getPaymentClient(){return getRetrofit().create(PaymentClient.class);}
 
 
 }
