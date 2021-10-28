@@ -32,4 +32,9 @@ public interface BusClient {
     @GET(Constants.BUS_LOGS)
     Call<TransactionResponse> getTransactionData(
             @Header("Authorization") String auth);
+
+//    @POST(Constants.BUS_GPS)
+//    Call<Booking> getTransaction (
+//            @Body TransactionRequest transactionRequest,
+//            @Header("Authorization") String auth);
 }

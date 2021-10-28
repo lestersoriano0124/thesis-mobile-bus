@@ -181,8 +181,9 @@ public class PaymentActivity extends AppCompatActivity {
         byte[] imageInByte   = byteArrayOutputStream.toByteArray();
 
         String encodedImage =Base64.getEncoder().encodeToString(imageInByte);
+//        Base64.encodeToString(bytes,Base64.DEFAULT);
 
-
+        Log.d("image",encodedImage);
         Call<PaymentRequest> paymentCall = ApiClient.getPaymentClient().uploadImage(encodedImage);
         paymentCall.enqueue(new Callback<PaymentRequest>() {
             @Override

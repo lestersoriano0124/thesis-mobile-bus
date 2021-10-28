@@ -13,5 +13,5 @@ public interface PaymentClient {
 
     @FormUrlEncoded
     @POST(Constants.PAYMENT_UPLOAD)
-    Call<PaymentRequest> uploadImage(@Field("EN_IMAGE") String encodedImage);
+    Call<PaymentRequest> uploadImage(@Field("proof_image") String encodedImage);
 }

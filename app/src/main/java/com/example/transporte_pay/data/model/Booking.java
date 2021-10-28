@@ -58,6 +58,12 @@ public class Booking {
     @SerializedName("gcash_number")
     @Expose
     private String gcashNumber;
+    @SerializedName("long")
+    @Expose
+    private String longitude;
+    @SerializedName("lat")
+    @Expose
+    private String latitude;
 
 
     public Integer getId() {
@@ -170,6 +176,22 @@ public class Booking {
 
     public String getGcashNumber() {
         return gcashNumber;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
     }
 
     public User getUser() {

@@ -13,6 +13,8 @@ public static final String BASE_URL = "http://192.168.18.9:8000/api/";
     public static final String BUS_ROUTES = "buses/bookings/step/one/";
     public static final String BUS_ROUTES2 = "buses/bookings/step/two/";
     public static final String BUS_CONFIRM = "buses/bookings/confirm";
+    public static final String BUS_GPS = "buses/gps/";
     public static final String PAYMENT_UPLOAD = "loginnew/";
+
 
 }

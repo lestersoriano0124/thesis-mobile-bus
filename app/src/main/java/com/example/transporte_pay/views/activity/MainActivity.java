@@ -56,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
         HashMap<String, String> userData = sessionManager.getUSerDetails();
         getEmail = userData.get(SessionManager.EMAIL);
         token = userData.get(SessionManager.PREF_USER_TOKEN);
-        email.setText(getEmail);
+//        email.setText(getEmail);
+        email.setText("Welcome ! "+userData.get(SessionManager.NAME));
         test = userData.get(SessionManager.NAME);
 
         HashMap<String, Integer> ids = sessionManager.getID();

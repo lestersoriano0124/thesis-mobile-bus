@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.data.model.Booking;
+import com.example.transporte_pay.data.model.Status;
+import com.example.transporte_pay.views.activity.MapsActivity;
 import com.example.transporte_pay.views.activity.PaymentActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +40,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView locations, date, status, name;
 
-        Button view;
+        Button view,geo;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -46,6 +48,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             date = itemView.findViewById(R.id.date_tv);
             status = itemView.findViewById(R.id.status_tv);
             view = itemView.findViewById(R.id.button);
+            geo = itemView.findViewById(R.id.geobutton);
             name = itemView.findViewById(R.id.passengerName_tv);
         }
     }
@@ -63,23 +66,26 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
     @SuppressLint("StringFormatMatches")
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-        String destination, start, locations, name;
-        String bus_gcash_number;
+        String destination, start, locations, name,bus_gcash_number,longitude,latitude,platenumber;
+        int status;
 
         if (roleId == 2) {
             holder.name.setVisibility(View.VISIBLE);
         }
 
         name = bookingList.get(position).getUser().getName();
+        status = bookingList.get(position).getStatus().getId();
         bus_gcash_number = bookingList.get(position).getBus().getGcashNumber();
-        Log.d("bus id ","******");
-        Log.d("bus id ",bus_gcash_number);
-        Log.d("bus id ","****");
+        latitude = bookingList.get(position).getBus().getLatitude();
+        longitude = bookingList.get(position).getBus().getLongitude();
+        platenumber = bookingList.get(position).getBus().getPlateNumber();
         holder.name.setText(name);
         destination = bookingList.get(position).getSchedule().getDestination().getName();
         start = bookingList.get(position).getSchedule().getStartingPoint().getName();
         locations = context.getString(R.string.locations, start, destination);
-
+        if (status == 2) {
+            holder.geo.setVisibility(View.VISIBLE);
+        }
         holder.locations.setText(locations);
         holder.date.setText(bookingList.get(position).getSchedule().getScheduleDate());
         holder.status.setText(bookingList.get(position).getStatus().getTitle());
@@ -134,6 +140,18 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             builder.setView(dialogView)
                     .setCancelable(true)
                     .show();
+        });
+        
+        holder.geo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MapsActivity.class);
+                intent.putExtra("longitude", longitude);
+                intent.putExtra("latitude", latitude);
+                intent.putExtra("fullname", name);
+                intent.putExtra("platenumber", platenumber);
+                context.startActivity(intent);
+            }
         });
 
     }

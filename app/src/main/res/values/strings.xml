@@ -33,5 +33,9 @@
     <string name="destination_logs">Destination Logs</string>
     <string name="bus">Bus Gcash#</string>
     <string name="referencenumber">Ref#</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_conductor_maps">ConductorMapsActivity</string>
+
+    //
 
 </resources>
