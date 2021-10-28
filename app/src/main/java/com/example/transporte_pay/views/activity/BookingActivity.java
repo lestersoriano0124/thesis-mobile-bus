@@ -45,6 +45,7 @@ public class BookingActivity extends AppCompatActivity{
     AlertDialogManager alert;
     DatePicker datePicker;
     Button booking;
+    Button bookings;
     private final ArrayList<String> destinationList = new ArrayList<>();
     private final ArrayList<String> StartingPointList = new ArrayList<>();
 
