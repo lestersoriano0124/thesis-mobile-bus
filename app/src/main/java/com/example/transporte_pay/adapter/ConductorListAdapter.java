@@ -1,6 +1,5 @@
 package com.example.transporte_pay.adapter;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,14 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.data.model.Booking;
-import com.example.transporte_pay.data.model.Status;
 import com.example.transporte_pay.views.activity.MapsActivity;
 import com.example.transporte_pay.views.activity.PaymentActivity;
 
@@ -26,10 +23,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHolder> {
+public class ConductorListAdapter extends RecyclerView.Adapter<ConductorListAdapter.ViewHolder> {
     private List<Booking> bookingList;
     private Context context;
     private Integer roleId;
+
+
 
     public void setBookingList(List<Booking> bookings, Integer r) {
         this.bookingList = bookings;
@@ -37,6 +36,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
 //        this.logsListener = listener;
         notifyDataSetChanged();
     }
+
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView locations, date, status, name;
 
@@ -52,20 +53,17 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             name = itemView.findViewById(R.id.passengerName_tv);
         }
     }
-
     @NonNull
-    @NotNull
     @Override
-    public BookingAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public ConductorListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
 
-        return new ViewHolder(LayoutInflater.from(context)
+        return new ConductorListAdapter.ViewHolder(LayoutInflater.from(context)
                 .inflate(R.layout.booking_list, parent, false));
     }
 
-    @SuppressLint("StringFormatMatches")
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ConductorListAdapter.ViewHolder holder, int position) {
         String destination, start, locations, name,bus_gcash_number,longitude,latitude,platenumber;
         int status,bus_id;
 
@@ -146,7 +144,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
                     .setCancelable(true)
                     .show();
         });
-        
+
         holder.geo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,6 +161,6 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return bookingList.size();
+        return 0;
     }
 }

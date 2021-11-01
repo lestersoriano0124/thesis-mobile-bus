@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher;
     EditText email,password;
     String personEmail,personName, personId;
-    String getName, getEmail, getGooId;
+    String getName, getEmail, getGooId,status;
     Integer getRole, id;
     ProgressBar loading;
     SessionManager sessionManager;
@@ -121,6 +121,8 @@ public class LoginActivity extends AppCompatActivity {
                     User user = response.body();
                     String token = user.getToken();
                     String lName = user.getName();
+                    String getStatus = user.getStatus();
+
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -130,9 +132,9 @@ public class LoginActivity extends AppCompatActivity {
                             getRole = user.getRole_id();
                             getGooId = user.getGoogle_id();
                             id = user.getId();
-
+                            status = user.getStatus();
                             sessionManager.saveAuthToken(token);
-                            sessionManager.createSession(getName, getEmail,getRole,getGooId,id);
+                            sessionManager.createSession(getName, getEmail,getRole,getGooId,id,status);
 
                             startActivity(new Intent(LoginActivity.this,MainActivity.class)
                                     .putExtra("token", user.getToken()));
@@ -215,6 +217,7 @@ public class LoginActivity extends AppCompatActivity {
         googleSignInRequest.setEmail(personEmail);
         googleSignInRequest.setName(personName);
         googleSignInRequest.setId(personId);
+        googleSignInRequest.setStatus("free");
 
         Call<User> gooResponseCall = ApiClient.getUserClient().createGoggleAccount(googleSignInRequest);
         gooResponseCall.enqueue(new Callback<User>() {
@@ -234,9 +237,10 @@ public class LoginActivity extends AppCompatActivity {
                             getRole = user.getRole_id();
                             getGooId = user.getGoogle_id();
                             id = user.getId();
+                            status = user.getStatus();
 
                             sessionManager.saveAuthToken(token);
-                            sessionManager.createSession(getName, getEmail,getRole,getGooId,id);
+                            sessionManager.createSession(getName, getEmail,getRole,getGooId,id,status);
                             Log.e("RESPONSE",getEmail + getGooId + getName + getRole);
 
                             alert.showAlertDialog(LoginActivity.this,

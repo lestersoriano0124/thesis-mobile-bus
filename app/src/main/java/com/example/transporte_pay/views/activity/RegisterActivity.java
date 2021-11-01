@@ -37,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText name, email, password, c_pass;
     ProgressBar loading;
     AlertDialogManager alert;
-    String getName, getEmail, getGooId;
+    String getName, getEmail, getGooId,status;
     Integer getRole, id;
     SessionManager sessionManager;
 
@@ -123,8 +123,9 @@ public class RegisterActivity extends AppCompatActivity {
                         getRole = user.getRole_id();
                         getGooId = user.getGoogle_id();
                         id = user.getId();
+                        status = user.getStatus();
                         SessionManager.saveAuthToken(token);
-                        sessionManager.createSession(getName, getEmail,getRole,getGooId,id);
+                        sessionManager.createSession(getName, getEmail,getRole,getGooId,id,status);
                         startActivity(new Intent(RegisterActivity.this,
                                 MainActivity.class).
                                 putExtra("data", user.getToken()));

@@ -11,6 +11,7 @@ public class User implements Serializable {
     private String email;
     private String google_id;
     private String token;
+    private String status;
 
     public int getId() {
         return id;
@@ -58,5 +59,12 @@ public class User implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

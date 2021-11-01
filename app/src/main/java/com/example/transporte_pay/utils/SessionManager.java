@@ -31,6 +31,7 @@ public class SessionManager {
     public static final String PASS = "PASS";
     public static final String G_ID = "G_ID";
     public static final String ID = "ID";
+    public static final String STATUS = "STATUS";
 
     public SessionManager(Context context) {
         this._context = context;
@@ -39,7 +40,7 @@ public class SessionManager {
         editor.apply();
     }
 
-    public void createSession(String name, String email, int role, String gID, int id){
+    public void createSession(String name, String email, int role, String gID, int id,String status){
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(NAME, name);
@@ -47,6 +48,7 @@ public class SessionManager {
         editor.putInt(ROLE, role);
         editor.putString(G_ID, String.valueOf(gID));
         editor.putInt(ID,id);
+        editor.putString(STATUS,status);
         editor.apply();
     }
 
@@ -106,6 +108,7 @@ public class SessionManager {
         user.put(PASS, pref.getString(PASS, null));
         user.put(G_ID, pref.getString(G_ID, null));
         user.put(PREF_USER_TOKEN, pref.getString(PREF_USER_TOKEN, null));
+        user.put(STATUS, pref.getString(STATUS, "open"));
 
         return user;
     }

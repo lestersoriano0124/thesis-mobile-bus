@@ -14,6 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.transporte_pay.R;
+import com.example.transporte_pay.data.request.LongLatRequest;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -74,7 +75,10 @@ public class ConductorMapsActivity extends FragmentActivity implements OnMapRead
                             float longitude = (float) location.getLongitude();
                             float latitude = (float) location.getLatitude();
                             Log.d("Long",String.valueOf( longitude)  );
-                            Log.d("latitude",String.valueOf( latitude)  );
+
+
+                            LongLatRequest longLatRequest = new LongLatRequest();
+                            longLatRequest.getBusId();
                             MarkerOptions options = new MarkerOptions().position(latLng).title("Current Location");
 
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));

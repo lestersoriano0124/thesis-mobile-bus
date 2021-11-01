@@ -1,6 +1,7 @@
 package com.example.transporte_pay.data.api;
 
 import com.example.transporte_pay.data.model.Booking;
+import com.example.transporte_pay.data.request.LongLatRequest;
 import com.example.transporte_pay.data.request.ScheduleRequest;
 import com.example.transporte_pay.data.request.TransactionRequest;
 import com.example.transporte_pay.data.response.RoutesResponse;
@@ -33,8 +34,8 @@ public interface BusClient {
     Call<TransactionResponse> getTransactionData(
             @Header("Authorization") String auth);
 
-//    @POST(Constants.BUS_GPS)
-//    Call<Booking> getTransaction (
-//            @Body TransactionRequest transactionRequest,
-//            @Header("Authorization") String auth);
+    @POST(Constants.BUS_GPS)
+    Call<Booking> getLongLat (
+            @Body LongLatRequest longLatRequest,
+            @Header("Authorization") String auth);
 }
