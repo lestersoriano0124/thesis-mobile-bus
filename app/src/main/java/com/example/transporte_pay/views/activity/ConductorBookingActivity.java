@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -47,6 +48,13 @@ public class ConductorBookingActivity extends AppCompatActivity {
         conductorListAdapter = new ConductorListAdapter();
 
         goToBookingList();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(ConductorBookingActivity.this,MainActivity.class);
+        startActivity(intent);
     }
 
     private void goToBookingList() {

@@ -25,10 +25,10 @@ public class Bus {
     @SerializedName("gcash_number")
     @Expose
     private String gcashNumber;
-    @SerializedName("longitude")
+    @SerializedName("long")
     @Expose
     private String longitude;
-    @SerializedName("latitude ")
+    @SerializedName("lat")
     @Expose
     private String latitude;
 

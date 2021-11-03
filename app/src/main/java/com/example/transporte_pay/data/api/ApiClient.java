@@ -43,6 +43,7 @@ public class ApiClient {
     }
 
     public static PaymentClient getPaymentClient(){return getRetrofit().create(PaymentClient.class);}
+    public static ConductorClient getConductorClient(){return getRetrofit().create(ConductorClient.class);}
 
 
 }

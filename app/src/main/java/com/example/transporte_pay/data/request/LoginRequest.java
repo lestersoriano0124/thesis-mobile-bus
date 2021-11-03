@@ -21,7 +21,7 @@ public class LoginRequest {
         this.password = password;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 

@@ -55,6 +55,9 @@ public class Schedule {
     @SerializedName("destination")
     @Expose
     private Destination destination;
+    @SerializedName("status")
+    @Expose
+    private String sStatus;
 
     public StartingPoint getStartingPoint() {
         return startingPoint;
@@ -182,6 +185,14 @@ public class Schedule {
 
     public void setDeletedAt(Object deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public void setsStatus(String sStatus) {
+        this.sStatus = sStatus;
+    }
+
+    public String getsStatus() {
+        return sStatus;
     }
 
     public Bus getBus() {

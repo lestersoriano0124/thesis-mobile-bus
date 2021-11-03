@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private int id;
-    private int role_id;
+    private Integer id;
+    private Integer role_id;
     private String name;
     private String email;
     private String google_id;

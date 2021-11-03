@@ -10,11 +10,16 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.transporte_pay.R;
+import com.example.transporte_pay.data.api.ApiClient;
+import com.example.transporte_pay.data.model.User;
+import com.example.transporte_pay.data.request.ConductorRequest;
 import com.example.transporte_pay.data.request.LongLatRequest;
+import com.example.transporte_pay.utils.SessionManager;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,17 +33,33 @@ import com.example.transporte_pay.databinding.ActivityConductorMapsBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ConductorMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private ActivityConductorMapsBinding binding;
     FusedLocationProviderClient client;
     SupportMapFragment mapFragment;
+    SessionManager sessionManager;
+    private String id,token;
+    public String busId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sessionManager = new SessionManager(getApplicationContext());
+        sessionManager.checkLogin();
+
+        HashMap<String, Integer> hash = sessionManager.getID();
+        id = String.valueOf(hash.get(SessionManager.ID));
+        HashMap<String, String> user = sessionManager.getUSerDetails();
+        token = user.get(SessionManager.PREF_USER_TOKEN);
 
         binding = ActivityConductorMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -49,6 +70,40 @@ public class ConductorMapsActivity extends FragmentActivity implements OnMapRead
 
         client = LocationServices.getFusedLocationProviderClient(this);
 //        mapFragment.getMapAsync(this);
+
+        ConductorRequest conductorRequest = new ConductorRequest();
+        conductorRequest.setUserId(id);
+        conductorRequest.setHealth("get");
+
+        Call<ConductorRequest> conductorRequestCall = ApiClient.getConductorClient().getConductorBusDetail(conductorRequest,"Bearer :"+token);
+        conductorRequestCall.enqueue(new Callback<ConductorRequest>() {
+            @Override
+            public void onResponse(Call<ConductorRequest> call, Response<ConductorRequest> response) {
+                if(response.body().isStatus()){
+
+                        ConductorRequest user = response.body();
+                        busId                 = user.getBusId();
+                    Toast.makeText(ConductorMapsActivity.this,response.body().getRemarks(),Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(ConductorMapsActivity.this,response.body().getRemarks(),Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ConductorRequest> call, Throwable t) {
+
+            }
+        });
+
+
+
+
+
+
+
+
 
         if (ActivityCompat.checkSelfPermission(ConductorMapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             // When permission granted
@@ -77,8 +132,42 @@ public class ConductorMapsActivity extends FragmentActivity implements OnMapRead
                             Log.d("Long",String.valueOf( longitude)  );
 
 
-                            LongLatRequest longLatRequest = new LongLatRequest();
-                            longLatRequest.getBusId();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ConductorRequest cR = new ConductorRequest();
+                                    cR.setBusId(busId);
+                                    cR.setLongitude(String.valueOf(longitude));
+                                    cR.setLatitude(String.valueOf(latitude));
+                                    cR.setHealth("update");
+
+                                    Call<ConductorRequest> crCall = ApiClient.getConductorClient().getConductorBusDetail(cR,"Bearer :" +token);
+                                    crCall.enqueue(new Callback<ConductorRequest>() {
+                                        @Override
+                                        public void onResponse(Call<ConductorRequest> call, Response<ConductorRequest> response) {
+                                            ConductorRequest res = response.body();
+                                            if(res.isStatus()){
+
+                                                Toast.makeText(ConductorMapsActivity.this,res.getRemarks(),Toast.LENGTH_SHORT).show();
+
+                                            }else{
+                                                Toast.makeText(ConductorMapsActivity.this,res.getRemarks(),Toast.LENGTH_SHORT).show();
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ConductorRequest> call, Throwable t) {
+
+                                        }
+                                    });
+
+                                }
+                            },700);
+
+
+
+
                             MarkerOptions options = new MarkerOptions().position(latLng).title("Current Location");
 
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));

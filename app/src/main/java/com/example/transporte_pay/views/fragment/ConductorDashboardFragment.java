@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,8 @@ import com.example.transporte_pay.views.activity.TravelLogsActivity;
 import java.util.HashMap;
 
 public class ConductorDashboardFragment extends Fragment  implements View.OnClickListener{
-    private String message,uName,status,id;
+    private String message,uName,status;
+    private Integer id;
     public TextView text;
     CardView card1, card2, card3 , card4;
     SessionManager sessionManager;
@@ -36,31 +38,24 @@ public class ConductorDashboardFragment extends Fragment  implements View.OnClic
         // Inflate the layout for this fragment
         sessionManager = new SessionManager(getContext());
         sessionManager.checkLogin();
-
-        HashMap<String, String> hash = sessionManager.getUSerDetails();
-        uName = hash.get(SessionManager.NAME);
-        status = hash.get(SessionManager.STATUS);
+        HashMap<String, String> hashUser = sessionManager.getUSerDetails();
+        status = hashUser.get(SessionManager.STATUS);
+        HashMap<String, Integer> hash = sessionManager.getID();
         id = hash.get(SessionManager.ID);
-        status = hash.get(SessionManager.STATUS);
 
         View view = inflater.inflate(R.layout.fragment_conductor_dashboard, container, false);
 
-
         card1 = view.findViewById(R.id.conductorBookingDetails_card);
         card2 = view.findViewById(R.id.conductorBusLocation_card);
-//        card3 = view.findViewById(R.id.account_card);
-//        card4 = view.findViewById(R.id.covid_card);
         card1.setOnClickListener(this);
         card2.setOnClickListener(this);
-//        card2.setOnClickListener(this);
-//        card3.setOnClickListener(this);
-//        card4.setOnClickListener(this);
+
+
         Bundle data = getArguments();
 
         if (data != null){
             message = data.getString("message");
         }
-//        text.setText("Basim");
         return view;
     }
 
@@ -71,11 +66,20 @@ public class ConductorDashboardFragment extends Fragment  implements View.OnClic
         Intent intent;
         switch (v.getId()){
             case R.id.conductorBusLocation_card:
-                context = getActivity().getApplicationContext();
+//                getConductorBusDetail
 
-                intent = new Intent(context, ConductorMapsActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                context = getActivity().getApplicationContext();
+                if (status.equals("booked") ) {
+                    intent = new Intent(context, ConductorMapsActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+
+                }else{
+                    card2.setEnabled(false);
+                    Toast.makeText(context, "You are not hired for travel yet. Please wait for your turn"+status, Toast.LENGTH_SHORT).show();
+                }
+
+
                 break;
             case R.id.conductorBookingDetails_card:
                 context = getActivity().getApplicationContext();

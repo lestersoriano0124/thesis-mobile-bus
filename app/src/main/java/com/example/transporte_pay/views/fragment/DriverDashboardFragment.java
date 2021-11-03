@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.utils.SessionManager;
+import com.example.transporte_pay.views.activity.ConductorBookingActivity;
 import com.example.transporte_pay.views.activity.PassengerActivity;
 import com.example.transporte_pay.views.activity.ProfileActivity;
 import com.example.transporte_pay.views.activity.TravelLogsActivity;
@@ -38,6 +39,11 @@ public class DriverDashboardFragment extends Fragment implements View.OnClickLis
 //        card2.setOnClickListener(this);
         card3.setOnClickListener(this);
 //        card4.setOnClickListener(this);
+
+        card2.setVisibility(View.GONE);
+        card3.setVisibility(View.GONE);
+        card4.setVisibility(View.GONE);
+
         return  view;
 
 
@@ -51,7 +57,7 @@ public class DriverDashboardFragment extends Fragment implements View.OnClickLis
         switch (v.getId()) {
             case R.id.driverViewPassenger_card:
                 context = getActivity().getApplicationContext();
-                intent = new Intent(context, TravelLogsActivity.class);
+                intent = new Intent(context, ConductorBookingActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
                 break;

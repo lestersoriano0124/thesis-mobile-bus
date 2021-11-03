@@ -79,6 +79,9 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         bus_id = bookingList.get(position).getBus().getId();
         latitude = bookingList.get(position).getBus().getLatitude();
         longitude = bookingList.get(position).getBus().getLongitude();
+        Log.d("Longitude",longitude);
+        Log.d("Longitude",latitude);
+
         platenumber = bookingList.get(position).getBus().getPlateNumber();
         holder.name.setText(name);
         destination = bookingList.get(position).getSchedule().getDestination().getName();
@@ -151,8 +154,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MapsActivity.class);
-                intent.putExtra("longitude", longitude);
-                intent.putExtra("latitude", latitude);
+                intent.putExtra("longitude", longitude.trim());
+                intent.putExtra("latitude", latitude.trim());
                 intent.putExtra("fullname", name);
                 intent.putExtra("platenumber", platenumber);
                 context.startActivity(intent);

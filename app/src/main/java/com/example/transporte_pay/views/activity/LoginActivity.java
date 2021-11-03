@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                     String token = user.getToken();
                     String lName = user.getName();
                     String getStatus = user.getStatus();
-
+                    Integer getId = user.getId();
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -135,7 +135,6 @@ public class LoginActivity extends AppCompatActivity {
                             status = user.getStatus();
                             sessionManager.saveAuthToken(token);
                             sessionManager.createSession(getName, getEmail,getRole,getGooId,id,status);
-
                             startActivity(new Intent(LoginActivity.this,MainActivity.class)
                                     .putExtra("token", user.getToken()));
                             finish();

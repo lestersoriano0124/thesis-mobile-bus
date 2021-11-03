@@ -14,7 +14,8 @@ public final class Constants {
     public static final String BUS_ROUTES2 = "buses/bookings/step/two/";
     public static final String BUS_CONFIRM = "buses/bookings/confirm";
     public static final String BUS_GPS = "buses/gps/";
-    public static final String PAYMENT_UPLOAD = "loginnew/";
+    public static final String PAYMENT_UPLOAD = "bookings/payment/";
+    public static final String CONDUCTOR_BUS = "bookings/conductorbus/";
 
 
 }
