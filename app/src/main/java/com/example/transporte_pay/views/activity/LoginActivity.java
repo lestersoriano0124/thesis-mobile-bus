@@ -176,6 +176,12 @@ public class LoginActivity extends AppCompatActivity {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
                 handleSignInResult(task);
+                Log.d("Response COde",String.valueOf(result.getResultCode()) );
+            }else{
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+                handleSignInResult(task);
+                Log.e("Response COde",String.valueOf(result.getResultCode()));
+                Toast.makeText(getApplicationContext(),"APi "+result.getResultCode(),Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -239,7 +245,7 @@ public class LoginActivity extends AppCompatActivity {
                             status = user.getStatus();
 
                             sessionManager.saveAuthToken(token);
-                            sessionManager.createSession(getName, getEmail,getRole,getGooId,id,status);
+                            sessionManager.createSession(getName, getEmail,getRole,getGooId,id,"free");
                             Log.e("RESPONSE",getEmail + getGooId + getName + getRole);
 
                             alert.showAlertDialog(LoginActivity.this,
