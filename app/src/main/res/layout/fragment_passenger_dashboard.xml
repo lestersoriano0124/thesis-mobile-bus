@@ -8,7 +8,9 @@
     android:orientation="vertical"
     android:weightSum="7"
     tools:context=".views.fragment.PassengerDashboardFragment" >
-
+ <ScrollView
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -209,43 +211,10 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/update_travel_card"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
-                android:layout_margin="12dp"
-                android:background="#fff"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    >
-                    <ImageView
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:src="@drawable/ic_details"
-                        />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="All Bookings"
-                        android:textAlignment="center"
-                        />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
     </LinearLayout>
-
+ </ScrollView>
     <TextView
         android:id="@+id/test"
         android:layout_width="90dp"

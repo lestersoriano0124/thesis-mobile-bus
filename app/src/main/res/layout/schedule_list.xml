@@ -56,11 +56,13 @@
                             android:layout_weight="1"
                             android:text="Time"
                             android:textSize="16sp"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text=" - "
+                            android:textColor="@color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -69,6 +71,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:textColor="@color/black"
                             android:text="Time"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -80,6 +83,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="10"
                         android:textDirection="rtl"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -88,6 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Fare"
+                        android:textColor="@color/black"
                         android:layout_weight="1"
                         android:textDirection="rtl"
                         android:textSize="16sp"
@@ -110,6 +115,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="Plate No.: "
+                            android:textColor="@color/black"
                             android:textDirection="ltr" />
                         <TextView
                             android:id="@+id/plateNo_tv"
@@ -117,6 +123,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textStyle="bold"
+                            android:textColor="@color/black"
                             android:text="Plate" />
                         <TextView
                             android:id="@+id/seats_tv"
@@ -125,12 +132,14 @@
                             android:layout_marginLeft="5dp"
                             android:layout_weight="1"
                             android:text="Seats "
+                            android:textColor="@color/black"
                             android:textStyle="bold"
                             android:textDirection="rtl"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="Seats "
+                            android:textColor="@color/black"
                             android:textDirection="rtl" />
                     </LinearLayout>
                 </LinearLayout>
