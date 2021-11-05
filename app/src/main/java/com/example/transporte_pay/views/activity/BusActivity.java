@@ -1,9 +1,5 @@
 package com.example.transporte_pay.views.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +8,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.transporte_pay.R;
 import com.example.transporte_pay.adapter.ScheduleAdapter;
@@ -34,8 +34,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BusActivity extends AppCompatActivity {
-    int uToID, uFromID, quantity = 1, uQuantity, uScheduleID;
-    String token, uDate, to, from;
+    int uToID, uFromID, quantity = 1, uQuantity, uScheduleID, user_id;
+    String token, uDate, to, from, name;
     RecyclerView recyclerView;
     TextView from_tv, to_tv, quantityNo;
     EditText date;
@@ -45,6 +45,8 @@ public class BusActivity extends AppCompatActivity {
     ArrayList<Schedule> schedules;
     AlertDialogManager alert;
     private ScheduleAdapter.RecyclerViewClickListener listener;
+    public static final int ID_FOR_ADD_BOOKING = -1;
+    public static final String DEFAULT_STATUS_FOR_ADD_BOOKING = "existing";
 
 
     @Override
@@ -68,6 +70,10 @@ public class BusActivity extends AppCompatActivity {
 
         HashMap<String, String> user = sessionManager.getUSerDetails();
         token = user.get(SessionManager.PREF_USER_TOKEN);
+        name = user.get(SessionManager.NAME);
+
+        HashMap<String, Integer> ids = sessionManager.getID();
+        user_id = ids.get(SessionManager.ID);
 
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
@@ -137,7 +143,7 @@ public class BusActivity extends AppCompatActivity {
     private void setOnClickListener() {
         listener = (v, position) -> {
             uScheduleID = schedules.get(position).getId();
-            uQuantity =  quantity;
+            uQuantity = quantity;
 
             gotoConfirm();
         };
@@ -145,32 +151,39 @@ public class BusActivity extends AppCompatActivity {
 
     private void gotoConfirm() {
         TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setId(ID_FOR_ADD_BOOKING);
         transactionRequest.setScheduleID(uScheduleID);
+        transactionRequest.setUser_status(DEFAULT_STATUS_FOR_ADD_BOOKING);
+        transactionRequest.setUser_id(user_id);
+        transactionRequest.setName(name);
+        transactionRequest.setStarting_point_id(uFromID);
+        transactionRequest.setDestination_id(uToID);
+        transactionRequest.setSchedule_date(uDate);
         transactionRequest.setQuantity(quantity);
 
         Call<Booking> transCall = ApiClient.getBusClient().getTransaction(transactionRequest, "Bearer " + token);
         transCall.enqueue(new Callback<Booking>() {
             @Override
             public void onResponse(@NotNull Call<Booking> call, @NotNull Response<Booking> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
 //                    String getResponse = new Gson().toJson(response.body());
 //                    List<Routes> routesList = new ArrayList<>();
 
                     alert.showAlertDialog(BusActivity.this,
-                        "TRANSACTION SAVED",
-                        "Transaction Successfully Saved",
-                        true);
+                            "TRANSACTION SAVED",
+                            "Transaction Successfully Saved",
+                            true);
 
                     new Handler().postDelayed(() -> {
                         Intent intent = new Intent(BusActivity.this, MainActivity.class);
                         startActivity(intent);
-                    }, 700);
+                    }, 2000);
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<Booking> call, @NotNull Throwable t) {
-                Log.e("error", "busActivity:failed code=" +t.getMessage());
+                Log.e("error", "busActivity:failed code=" + t.getMessage());
             }
         });
     }
