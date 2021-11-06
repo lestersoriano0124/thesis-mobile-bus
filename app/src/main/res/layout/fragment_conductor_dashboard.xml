@@ -8,211 +8,213 @@
     android:orientation="vertical"
     android:weightSum="7"
     tools:context=".views.fragment.PassengerDashboardFragment" >
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
-        android:orientation="vertical"
-        android:weightSum="2"
-        android:padding="16dp"
-        >
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:weightSum="2"
-            android:padding="16dp"
-            tools:ignore="NestedWeights">
-            <androidx.cardview.widget.CardView
-                android:id="@+id/conductorBookingDetails_card"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
-                android:layout_margin="12dp"
-                android:background="#fff"
-                android:focusable="true">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:src="@drawable/ic_booking"
-                        android:contentDescription="@string/booking_details" />
-                    <TextView
-                        android:layout_marginTop="20dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/booking_details"
-                        android:textAlignment="center"
-                        />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/conductorBusLocation_card"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
-                android:layout_margin="12dp"
-                android:background="#fff"
-                android:focusable="true">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    tools:ignore="UseCompoundDrawables">
-                    <ImageView
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:src="@drawable/ic_map"
-                        android:contentDescription="@string/bus_location" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/bus_location"
-                        android:textAlignment="center"
-                        />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:orientation="vertical"
             android:weightSum="2"
             android:padding="16dp"
             >
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/conductorAccountDetails_card"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
-                android:layout_margin="12dp"
-                android:background="#fff"
-                android:focusable="true">
-                <LinearLayout
-                    android:layout_width="match_parent"
+                android:weightSum="2"
+                android:padding="16dp"
+                tools:ignore="NestedWeights">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/conductorBookingDetails_card"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    tools:ignore="UseCompoundDrawables">
-                    <ImageView
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:src="@drawable/ic_details"
-                        android:contentDescription="@string/account_details" />
-                    <TextView
+                    android:layout_weight="1"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="8dp"
+                    android:layout_margin="12dp"
+                    android:background="#fff"
+                    android:focusable="true">
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/account_details"
-                        android:textAlignment="center"
-                        />
-                </LinearLayout>
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        tools:ignore="UseCompoundDrawables">
 
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:id="@+id/conductorTrace_card"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
-                android:layout_margin="12dp"
-                android:background="#fff"
-                android:focusable="true">
-                <LinearLayout
-                    android:layout_width="match_parent"
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:src="@drawable/ic_booking"
+                            android:contentDescription="@string/booking_details" />
+                        <TextView
+                            android:layout_marginTop="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/booking_details"
+                            android:textAlignment="center"
+                            />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/conductorBusLocation_card"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    tools:ignore="UseCompoundDrawables">
-                    <ImageView
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:src="@drawable/ic_temperature"
-                        android:contentDescription="@string/contact_tracing" />
-                    <TextView
+                    android:layout_weight="1"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="8dp"
+                    android:layout_margin="12dp"
+                    android:background="#fff"
+                    android:focusable="true">
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/contact_tracing"
-                        android:textAlignment="center"
-                        />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:weightSum="2"
-            android:padding="16dp"
-            >
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        tools:ignore="UseCompoundDrawables">
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:src="@drawable/ic_map"
+                            android:contentDescription="@string/bus_location" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/bus_location"
+                            android:textAlignment="center"
+                            />
+                    </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/end_travel_card"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
-                android:layout_margin="12dp"
-                android:background="#fff"
+                android:weightSum="2"
+                android:padding="16dp"
                 >
-                <LinearLayout
-                    android:layout_width="match_parent"
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/conductorAccountDetails_card"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    >
-                    <ImageView
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:src="@drawable/ic_details"
-                        />
-                    <TextView
+                    android:layout_weight="1"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="8dp"
+                    android:layout_margin="12dp"
+                    android:background="#fff"
+                    android:focusable="true">
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="End Travel"
-                        android:textAlignment="center"
-                        />
-                </LinearLayout>
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        tools:ignore="UseCompoundDrawables">
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:src="@drawable/ic_details"
+                            android:contentDescription="@string/account_details" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/account_details"
+                            android:textAlignment="center"
+                            />
+                    </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:id="@+id/conductorTrace_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="8dp"
+                    android:layout_margin="12dp"
+                    android:background="#fff"
+                    android:focusable="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        tools:ignore="UseCompoundDrawables">
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:src="@drawable/ic_temperature"
+                            android:contentDescription="@string/contact_tracing" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/contact_tracing"
+                            android:textAlignment="center"
+                            />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:weightSum="3"
+                android:padding="16dp"
+                >
 
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/end_travel_card"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="8dp"
+                    android:layout_margin="12dp"
+                    android:background="#fff"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        >
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:src="@drawable/ic_details"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="End Travel"
+                            android:textAlignment="center"
+                            />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
+    </ScrollView>
     <TextView
         android:id="@+id/test"
         android:layout_width="90dp"

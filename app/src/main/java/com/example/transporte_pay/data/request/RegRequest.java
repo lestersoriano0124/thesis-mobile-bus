@@ -3,6 +3,7 @@ package com.example.transporte_pay.data.request;
 public class RegRequest {
     private String name;
     private String email;
+    private String phone_number;
     private String password;
     private String password_confirmation;
 
@@ -20,6 +21,13 @@ public class RegRequest {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getPhone() {
+        return phone_number;
+    }
+
+    public void setPhone(String phone_number) {
+        this.phone_number = phone_number;
     }
 
     public String getPassword() {

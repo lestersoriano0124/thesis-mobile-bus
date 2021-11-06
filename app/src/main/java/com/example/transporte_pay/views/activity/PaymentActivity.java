@@ -50,7 +50,7 @@ import retrofit2.Response;
 
 public class PaymentActivity extends AppCompatActivity {
     TextView message;
-    EditText busGcash,fullName,reference;
+    EditText busGcash,fullName,reference,gcash;
     ImageButton uploadImageBtn;
     ImageView showImage;
     Button save,back;
@@ -101,6 +101,7 @@ public class PaymentActivity extends AppCompatActivity {
         token = user.get(SessionManager.PREF_USER_TOKEN);
 
         busGcash       = findViewById(R.id.gcashNumber);
+        gcash          = findViewById(R.id.gcash);
         fullName       = findViewById(R.id.fullname);
         reference      = findViewById(R.id.reference);
         uploadImageBtn = findViewById(R.id.uploadBtn);
@@ -169,6 +170,7 @@ public class PaymentActivity extends AppCompatActivity {
 //                MultipartBody.Part.createFormData("picture", imageFile.getName(), requestFile);
 //
         String referenceId = reference.getText().toString();
+        String gcashNumber = gcash.getText().toString();
 //        RequestBody references =
 //                RequestBody.create(
 //                        okhttp3.MultipartBody.FORM, referenceId);
@@ -180,6 +182,7 @@ public class PaymentActivity extends AppCompatActivity {
         PaymentRequest paymentRequest = new PaymentRequest();
         paymentRequest.setItemId(transId);
         paymentRequest.setReferenceId(referenceId);
+        paymentRequest.setGcash(gcashNumber);
 //        paymentRequest.setSchedule_date(uDate);
 //        Call<PaymentRequest> paymentCall = ApiClient.getPaymentClient().uploadImage(body, item_id ,references,"Bearer"+ token);
         Call<PaymentRequest> paymentCall = ApiClient.getPaymentClient().uploadImage(paymentRequest,"Bearer"+ token);

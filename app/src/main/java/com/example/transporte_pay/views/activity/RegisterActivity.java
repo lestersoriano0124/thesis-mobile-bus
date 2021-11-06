@@ -34,7 +34,7 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity {
     TextView loginLink;
     Button registerButton;
-    EditText name, email, password, c_pass;
+    EditText name, email, password, c_pass,phoneNumber;
     ProgressBar loading;
     AlertDialogManager alert;
     String getName, getEmail, getGooId,status;
@@ -53,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.reg_password);
         c_pass = findViewById(R.id.reg_confirm_password);
         loading = findViewById(R.id.progressBar_update);
+        phoneNumber   = findViewById(R.id.prof_number);
 
         sessionManager = new SessionManager(this);
         alert = new AlertDialogManager();
@@ -65,13 +66,14 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(v -> {
             if (TextUtils.isEmpty(name.getText().toString()) ||
                  TextUtils.isEmpty(email.getText().toString()) ||
+                 TextUtils.isEmpty(phoneNumber.getText().toString()) ||
                  TextUtils.isEmpty(password.getText().toString()) ||
                  TextUtils.isEmpty(c_pass.getText().toString()))
             {
                 Toast.makeText(RegisterActivity.this, "Email/Password is Required", Toast.LENGTH_LONG).show();
                 alert.showAlertDialog(RegisterActivity.this,
                         "FAILED",
-                        "Name/Email/Password is Required, Don't leave it blank.",
+                        "Name/Email/Phone Number /Password is Required, Don't leave it blank.",
                         false);
             }else if (!TextUtils.equals(password.getText().toString(), c_pass.getText().toString())){
                 alert.showAlertDialog(RegisterActivity.this,
@@ -82,6 +84,11 @@ public class RegisterActivity extends AppCompatActivity {
                 alert.showAlertDialog(RegisterActivity.this,
                         "FAILED",
                         "Please Provide your Full Name",
+                        false);
+            }else if(phoneNumber.length() !=11){
+                alert.showAlertDialog(RegisterActivity.this,
+                        "FAILED",
+                        "Only 11 digit Phone Number is allowed",
                         false);
             }
             else
@@ -97,6 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
         RegRequest regRequest = new RegRequest();
         regRequest.setName(capitalize(name.getText().toString()));
         regRequest.setEmail(email.getText().toString());
+        regRequest.setPhone(phoneNumber.getText().toString());
         regRequest.setPassword(password.getText().toString());
         regRequest.setPassword_confirmation(c_pass.getText().toString());
 
