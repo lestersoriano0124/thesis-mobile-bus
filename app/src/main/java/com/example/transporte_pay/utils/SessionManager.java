@@ -60,6 +60,13 @@ public class SessionManager {
         editor.apply();
     }
 
+    public void updateStatus(String status){
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(IS_LOGIN, true);
+        editor.putString(STATUS, status);
+        editor.apply();
+    }
+
 //     * Check login method wil check user login status
 //     * If false it will redirect user to login page
 //     * Else won't do anything
